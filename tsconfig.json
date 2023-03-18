@@ -5,6 +5,21 @@
         "target": "es2021",
         "esModuleInterop": true,
         "sourceMap": true,
-        "allowJs": true
-    }
+        "allowJs": true,
+        "strictNullChecks": true,
+        "baseUrl": "src",
+        "paths": {
+            "@/tests/*": [
+                "../tests/*"
+            ],
+            "@/*": [
+                "*"
+            ]
+        }
+    },
+    "include": [
+        "src",
+        "tests"
+    ],
+    "exclude": []
 }
