@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./dist/main/server.js",
     "start:dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --watch src ./src/main/server.ts",
     "test": "jest --passWithNoTests --silent --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit.config.js",
+    "build": "rimraf dist && tsc -p tsconfig-build.json",
+    "docker:reset": "docker rm -f $(docker ps -a -q)",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -26,6 +29,7 @@
     "husky": "^8.0.3",
     "jest": "^29.5.0",
     "lint-staged": "^13.2.0",
+    "rimraf": "^4.4.0",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
