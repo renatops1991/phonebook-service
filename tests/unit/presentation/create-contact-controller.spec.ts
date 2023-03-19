@@ -22,10 +22,19 @@ describe('CreateContactController', () => {
   it('Should return 500 error if create method throw exception error', async () => {
     jest
       .spyOn(contactStub, 'create')
-      .mockImplementationOnce(() => { throw new Error('Internal server error') })
+      .mockImplementationOnce(() => { throw new Error() })
     const expectedResponse = await sut.handle(fixtureContact())
     expect(expectedResponse.statusCode).toBe(500)
     expect(expectedResponse.body).toEqual(new Error('Internal server error'))
+  })
+
+  it('Should return 403 error if create method of the Contact UseCase returns null', async () => {
+    jest
+      .spyOn(contactStub, 'create')
+      .mockResolvedValueOnce(null)
+    const expectedResponse = await sut.handle(fixtureContact())
+    expect(expectedResponse.statusCode).toBe(403)
+    expect(expectedResponse.body).toEqual(new Error('The received email is already in use'))
   })
 
   it('Should return success if create method on succeeds', async () => {
