@@ -10,12 +10,21 @@ class ContactStub implements IContact {
   }
 }
 const contactStub = new ContactStub()
+const sut = new CreateContactController(contactStub)
 describe('CreateContactController', () => {
   it('Should call create method of the Contact UseCase with correct values', async () => {
-    const sut = new CreateContactController(contactStub)
     const createContactSpy = jest
       .spyOn(contactStub, 'create')
     await sut.handle(fixtureContact())
     expect(createContactSpy).toHaveBeenCalledWith(fixtureContact())
+  })
+
+  it('Should return 500 error if create method throw exception error', async () => {
+    jest
+      .spyOn(contactStub, 'create')
+      .mockImplementationOnce(() => { throw new Error('Internal server error') })
+    const expectedResponse = await sut.handle(fixtureContact())
+    expect(expectedResponse.statusCode).toBe(500)
+    expect(expectedResponse.body).toEqual(new Error('Internal server error'))
   })
 })
