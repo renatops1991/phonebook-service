@@ -10,8 +10,11 @@ export class CreateContactController implements IController {
 
   async handle (contactDto: CreateContactDto): Promise<HttpResponseType> {
     try {
-      await this.contact.create(contactDto)
-      throw new Error('Method not implemented')
+      const contact = await this.contact.create(contactDto)
+      return {
+        statusCode: 201,
+        body: contact
+      }
     } catch (error) {
       return {
         statusCode: 500,
