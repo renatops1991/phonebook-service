@@ -10,8 +10,13 @@ export class Contact implements IContact {
     private readonly contactBuilder?: IContactBuilder
   ) { }
 
-  async create (contactDto: CreateContactDto): Promise<ContactOutputDto> {
+  async create (contactDto: CreateContactDto): Promise<ContactOutputDto | null> {
+    const hasContact = await this.contactRepository.hasContact(contactDto.email)
+    if (hasContact) {
+      return null
+    }
     const buildedContact = this.contactBuilder?.buildContact(contactDto) as CreateContactDto
-    return await this.contactRepository.create(buildedContact)
+    const contact = await this.contactRepository.create(buildedContact)
+    return contact
   }
 }
