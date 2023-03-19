@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 describe('MongoHelper', () => {
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGODB_URI as string)
+    await MongoHelper.connect(process.env.MONGODB_URI_TEST as string)
   })
 
   afterAll(async () => {
