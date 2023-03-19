@@ -28,6 +28,10 @@ class ContactRepositoryStub implements IContactRepository {
       resolve(fixtureContactOutput)
     })
   }
+
+  async hasContact (email: string): Promise<boolean> {
+    return await Promise.resolve(false)
+  }
 }
 
 class ContactBuilderStub implements IContactBuilder {
@@ -52,6 +56,21 @@ describe('Contact UseCase', () => {
       const createSpy = jest.spyOn(contactRepositoryStub, 'create')
       await sut.create(fixtureContact)
       expect(createSpy).toHaveBeenCalledWith(fixtureContact)
+    })
+    it('Should call loadByEmail method of repository with correct values ', async () => {
+      const sut = new Contact(contactRepositoryStub, contactBuilderStub)
+      const hasContactSpy = jest.spyOn(contactRepositoryStub, 'hasContact')
+      await sut.create(fixtureContact)
+      expect(hasContactSpy).toHaveBeenCalledWith(fixtureContact.email)
+    })
+    it('Should return null if loadByEmail method returns true', async () => {
+      const sut = new Contact(contactRepositoryStub, contactBuilderStub)
+      jest
+        .spyOn(contactRepositoryStub, 'hasContact')
+        .mockReturnValue(Promise.resolve(true))
+      await sut.create(fixtureContact)
+      const expectedResponse = await sut.create(fixtureContact)
+      expect(expectedResponse).toBeNull()
     })
     it('Should return contact on success', async () => {
       const sut = new Contact(contactRepositoryStub, contactBuilderStub)
