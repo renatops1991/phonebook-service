@@ -27,4 +27,10 @@ describe('CreateContactController', () => {
     expect(expectedResponse.statusCode).toBe(500)
     expect(expectedResponse.body).toEqual(new Error('Internal server error'))
   })
+
+  it('Should return success if create method on succeeds', async () => {
+    const expectedResponse = await sut.handle(fixtureContact())
+    expect(expectedResponse.statusCode).toBe(201)
+    expect(expectedResponse.body).toEqual(fixtureContactOutput())
+  })
 })
