@@ -3,7 +3,7 @@ import { Collection } from 'mongodb'
 import dotenv from 'dotenv'
 import { ContactRepositoryMongoAdapter } from '@/infra/mongodb/contact-repository-mongo-adapter'
 
-let userCollection: Collection
+let contactCollection: Collection
 
 const fixtureContact = {
   name: 'John foo bar',
@@ -20,6 +20,8 @@ const fixtureContact = {
   phones: ['1194657882', '11457895642']
 }
 
+const sut = new ContactRepositoryMongoAdapter()
+
 dotenv.config()
 describe('ContactRepositoryMongoAdapter', () => {
   beforeAll(async () => {
@@ -31,16 +33,27 @@ describe('ContactRepositoryMongoAdapter', () => {
   })
 
   beforeEach(async () => {
-    userCollection = MongoHelper.getCollection('users')
-    await userCollection.deleteMany({})
+    contactCollection = MongoHelper.getCollection('users')
+    await contactCollection.deleteMany({})
   })
   describe('create', () => {
     it('Should create a new contact and returns on succeeds', async () => {
-      const sut = new ContactRepositoryMongoAdapter()
       const expectedResponse = await sut.create(fixtureContact)
       expect(expectedResponse).toBeTruthy()
       expect(expectedResponse.name).toEqual(fixtureContact.name)
       expect(expectedResponse.email).toEqual(fixtureContact.email)
+    })
+  })
+
+  describe('hasContact', () => {
+    it('Should return true if contacts exists', async () => {
+      await contactCollection.insertOne(fixtureContact)
+      const expectedResponse = await sut.hasContact(fixtureContact.email)
+      expect(expectedResponse).toBeTruthy()
+    })
+    it('Should return false if contacts exists', async () => {
+      const expectedResponse = await sut.hasContact('foo@example.com')
+      expect(expectedResponse).toBeFalsy()
     })
   })
 })
