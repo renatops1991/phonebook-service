@@ -15,7 +15,10 @@ export class ContactRepositoryMongoAdapter implements IContactRepository {
     return MongoHelper.map(contact)
   }
 
-  hasContact: (email: string) => Promise<boolean>
+  async hasContact (email: string): Promise<boolean> {
+    const contact = await this.getUserCollection().findOne({ email })
+    return contact !== null
+  }
 
   private getUserCollection (): Collection {
     if (!this.userCollection) {
