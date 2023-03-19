@@ -11,6 +11,13 @@ export class CreateContactController implements IController {
   async handle (contactDto: CreateContactDto): Promise<HttpResponseType> {
     try {
       const contact = await this.contact.create(contactDto)
+      if (!contact) {
+        return {
+          statusCode: 403,
+          body: new Error('The received email is already in use')
+        }
+      }
+
       return {
         statusCode: 201,
         body: contact
@@ -18,7 +25,7 @@ export class CreateContactController implements IController {
     } catch (error) {
       return {
         statusCode: 500,
-        body: error
+        body: new Error('Internal server error')
       }
     }
   }
