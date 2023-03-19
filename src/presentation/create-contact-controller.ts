@@ -6,10 +6,17 @@ import { HttpResponseType } from './types/http-response-type'
 export class CreateContactController implements IController {
   constructor (
     private readonly contact: IContact
-  ) {}
+  ) { }
 
   async handle (contactDto: CreateContactDto): Promise<HttpResponseType> {
-    await this.contact.create(contactDto)
-    return await new Promise(resolve => { resolve({ statusCode: 200 }) })
+    try {
+      await this.contact.create(contactDto)
+      throw new Error('Method not implemented')
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: error
+      }
+    }
   }
 }
