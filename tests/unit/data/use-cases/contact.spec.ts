@@ -20,10 +20,12 @@ const fixtureContact = {
   phones: ['1194657882', '11457895642']
 }
 
+const fixtureContactOutput = Object.assign({ ...fixtureContact, id: 'foo' })
+
 class ContactRepositoryStub implements IContactRepository {
   async create (contactDto: CreateContactDto): Promise<ContactOutputDto> {
     return await new Promise(resolve => {
-      resolve(Object.assign({ ...fixtureContact, id: 'foo' }))
+      resolve(fixtureContactOutput)
     })
   }
 }
@@ -42,16 +44,19 @@ describe('Contact UseCase', () => {
     it('Should call buildContact method of ContactBuilder class with correct values ', async () => {
       const sut = new Contact(contactRepositoryStub, contactBuilderStub)
       const buildContactSpy = jest.spyOn(contactBuilderStub, 'buildContact')
-      const expectResponse = fixtureContact
       await sut.create(fixtureContact)
-      expect(buildContactSpy).toHaveBeenCalledWith(expectResponse)
+      expect(buildContactSpy).toHaveBeenCalledWith(fixtureContact)
     })
     it('Should call create method of repository with correct values ', async () => {
       const sut = new Contact(contactRepositoryStub, contactBuilderStub)
       const createSpy = jest.spyOn(contactRepositoryStub, 'create')
-      const expectResponse = fixtureContact
       await sut.create(fixtureContact)
-      expect(createSpy).toHaveBeenCalledWith(expectResponse)
+      expect(createSpy).toHaveBeenCalledWith(fixtureContact)
+    })
+    it('Should return contact on success', async () => {
+      const sut = new Contact(contactRepositoryStub, contactBuilderStub)
+      const expectResponse = await sut.create(fixtureContact)
+      expect(expectResponse).toEqual(fixtureContactOutput)
     })
   })
 })
