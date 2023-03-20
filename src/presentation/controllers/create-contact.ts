@@ -1,5 +1,7 @@
 import { IContact } from '@/domain/protocols/contact'
 import { CreateContactDto } from '@/main/dtos/create-contact.dto'
+import { EmailInUseError } from '../errors/email-in-use-error'
+import { created, forbidden, serverError } from '../helpers/http-protocols-helper'
 import { IController } from '../protocols/controller'
 import { HttpResponseType } from '../types/http-response-type'
 
@@ -12,21 +14,11 @@ export class CreateContact implements IController {
     try {
       const contact = await this.contact.create(contactDto)
       if (!contact) {
-        return {
-          statusCode: 403,
-          body: new Error('The received email is already in use')
-        }
+        return forbidden(new EmailInUseError().serializeErrors())
       }
-
-      return {
-        statusCode: 201,
-        body: contact
-      }
+      return created(contact)
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: new Error('Internal server error')
-      }
+      return serverError(error)
     }
   }
 }

@@ -1,5 +1,4 @@
 import { ErrorTypeEnum } from '../enum/error-type-enum'
-import { SerializeErrorType } from '../types/serialize-error-type'
 import { CustomError } from './custom-error'
 
 export class MissingMandatoryParamError extends CustomError {
@@ -8,7 +7,7 @@ export class MissingMandatoryParamError extends CustomError {
     Object.setPrototypeOf(this, MissingMandatoryParamError.prototype)
   }
 
-  serializeErrors (): SerializeErrorType {
+  serializeErrors (): any {
     return {
       type: ErrorTypeEnum.MISSING_MANDATORY_PARAM_ERROR,
       field: this.field,

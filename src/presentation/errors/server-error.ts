@@ -1,5 +1,4 @@
 import { ErrorTypeEnum } from '../enum/error-type-enum'
-import { SerializeErrorType } from '../types/serialize-error-type'
 import { CustomError } from './custom-error'
 
 export class ServerError extends CustomError {
@@ -8,7 +7,7 @@ export class ServerError extends CustomError {
     Object.setPrototypeOf(this, ServerError.prototype)
   }
 
-  serializeErrors (): SerializeErrorType {
+  serializeErrors (): any {
     return {
       type: ErrorTypeEnum.SERVER_ERROR,
       message: 'Internal Server Error',

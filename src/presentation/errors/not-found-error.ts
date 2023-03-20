@@ -1,5 +1,4 @@
 import { ErrorTypeEnum } from '../enum/error-type-enum'
-import { SerializeErrorType } from '../types/serialize-error-type'
 import { CustomError } from './custom-error'
 
 export class NotFoundError extends CustomError {
@@ -8,7 +7,7 @@ export class NotFoundError extends CustomError {
     Object.setPrototypeOf(this, NotFoundError.prototype)
   }
 
-  serializeErrors (): SerializeErrorType {
+  serializeErrors (): any {
     return {
       type: ErrorTypeEnum.NOT_FOUND,
       message: 'Search not found'

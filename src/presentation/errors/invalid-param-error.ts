@@ -1,5 +1,4 @@
 import { ErrorTypeEnum } from '../enum/error-type-enum'
-import { SerializeErrorType } from '../types/serialize-error-type'
 import { CustomError } from './custom-error'
 
 export class InvalidParamError extends CustomError {
@@ -8,7 +7,7 @@ export class InvalidParamError extends CustomError {
     Object.setPrototypeOf(this, InvalidParamError.prototype)
   }
 
-  serializeErrors (): SerializeErrorType {
+  serializeErrors (): any {
     return {
       type: ErrorTypeEnum.INVALID_PARAM_ERROR,
       field: this.field,
