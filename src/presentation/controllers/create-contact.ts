@@ -3,7 +3,7 @@ import { CreateContactDto } from '@/main/dtos/create-contact.dto'
 import { IController } from '../protocols/controller'
 import { HttpResponseType } from '../types/http-response-type'
 
-export class CreateContactController implements IController {
+export class CreateContact implements IController {
   constructor (
     private readonly contact: IContact
   ) { }
