@@ -1,13 +1,8 @@
 import { InvalidParamError } from '@/presentation/errors/invalid-param-error'
+import { mockValidator } from '@/tests/mocks/mock-validate'
 import { EmailValidate } from '@/validation/email-validate'
-import { IValidator } from '@/validation/protocols/validator'
 
-class ValidatorStub implements IValidator {
-  isValidEmail (email: string): boolean {
-    return true
-  }
-}
-const validateStub = new ValidatorStub()
+const validateStub = mockValidator()
 const sut = new EmailValidate('email', validateStub)
 
 describe('EmailValidate', () => {
