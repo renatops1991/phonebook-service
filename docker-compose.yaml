@@ -13,7 +13,7 @@ services:
     container_name: phonebook-service-api
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: ./docker/Dockerfile
     restart: always
     image: phonebook-service-api
     environment:
@@ -21,8 +21,8 @@ services:
       - PORT=${PORT}
     command: npm run start
     volumes:
-      - ./dist/:/usr/app/dist/
-      - ./package.json:/usr/app/package.json
+      - ./dist:/usr/src/app/dist
+      - ./package.json:/usr/src/app/package.json
     ports:
       - "3001:3001"
     links:

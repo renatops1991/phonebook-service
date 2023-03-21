@@ -1,6 +1,7 @@
+import 'module-alias/register'
 import { MongoHelper } from '@/infra/mongodb/mongo-helper'
-import dotenv from 'dotenv'
 import { Express } from 'express'
+import dotenv from 'dotenv'
 
 dotenv.config()
 MongoHelper.connect(process.env.MONGODB_URI as string)
