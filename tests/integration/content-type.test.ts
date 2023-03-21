@@ -5,8 +5,8 @@ import request from 'supertest'
 let app: Express
 
 describe('ContentType Middleware', () => {
-  beforeAll(() => {
-    app = setupApp()
+  beforeAll(async () => {
+    app = await setupApp()
   })
   it('Should return default content type as json', async () => {
     app.get('/content-type', (_, response: Response) => {
@@ -18,12 +18,12 @@ describe('ContentType Middleware', () => {
   })
 
   it('Should return default content type as xml', async () => {
-    app.get('/content-type', (_, response: Response) => {
+    app.get('/content-type-xml', (_, response: Response) => {
       response.type('xml')
       response.send('')
     })
     await request(app)
-      .get('/content-type')
+      .get('/content-type-xml')
       .expect('content-type', /xml/)
   })
 })

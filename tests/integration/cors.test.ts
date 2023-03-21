@@ -4,8 +4,8 @@ import request from 'supertest'
 
 let app: Express
 describe('Cors Middleware', () => {
-  beforeAll(() => {
-    app = setupApp()
+  beforeAll(async () => {
+    app = await setupApp()
   })
   it('Should enabled Cors', async () => {
     app.get('/cors', (request, response) => {
