@@ -4,9 +4,11 @@ import { ContactRepositoryMongoAdapter } from '@/infra/mongodb/contact-repositor
 import { CreateContact } from '@/presentation/controllers/create-contact'
 import { expressAdapter } from '../adapters/express-adapter'
 import { Router } from 'express'
+import { makeValidationFactory } from '../factories/validation-factory'
 
 export default (router: Router): void => {
   const contact = new Contact(new ContactRepositoryMongoAdapter(), new ContactBuilder())
+  const validationFactory = makeValidationFactory()
 
-  router.post('/contact', expressAdapter(new CreateContact(contact)))
+  router.post('/contact', expressAdapter(new CreateContact(contact, validationFactory)))
 }
