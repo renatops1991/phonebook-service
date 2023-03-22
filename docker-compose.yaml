@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   mongodb:
     container_name: phonebook-mongodb
@@ -11,17 +10,15 @@ services:
       - "27017:27017"
   api:
     container_name: phonebook-service-api
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile
+    image: node:16
+    working_dir: /usr/src/app
     restart: always
-    image: phonebook-service-api
     environment:
       - MONGODB_URI=${MONGODB_DOCKER_URI}
       - PORT=${PORT}
-    command: npm run start
+    command: bash -c "npm install --omit=dev && npm run start"
     volumes:
-      - ./dist:/usr/src/app/dist
+      - ./dist/:/usr/src/app/dist/
       - ./package.json:/usr/src/app/package.json
     ports:
       - "3001:3001"
