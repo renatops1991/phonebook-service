@@ -1,3 +1,4 @@
+import { IValidation } from '@/presentation/protocols/validation'
 import { IValidator } from '@/validation/protocols/validator'
 
 export const mockValidator = (): IValidator => {
@@ -12,4 +13,13 @@ export const mockValidator = (): IValidator => {
   }
 
   return new ValidatorStub()
+}
+
+export const mockValidation = (): IValidation => {
+  class ValidationStub implements IValidation {
+    validate (input: any): Error | null {
+      return null
+    }
+  }
+  return new ValidationStub()
 }
