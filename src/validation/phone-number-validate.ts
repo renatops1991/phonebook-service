@@ -14,7 +14,7 @@ export class PhoneNumberValidate implements IValidation {
     }
 
     const hasValidPhoneNumbers = input[this.phones].map((phone: string) => {
-      return this.validator.isValidPhoneNumber(phone)
+      return this.validator.hasValidPhoneNumber(phone)
     })
 
     for (const phone of hasValidPhoneNumbers) {

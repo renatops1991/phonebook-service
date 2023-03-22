@@ -31,21 +31,21 @@ describe('ValidatorAdapter', () => {
     })
   })
 
-  describe('isValidPhoneNumber', () => {
-    it('Should call isValidPhoneNumber method of the validator lib with correct value', () => {
+  describe('hasValidPhoneNumber', () => {
+    it('Should call hasValidPhoneNumber method of the validator lib with correct value', () => {
       const isMobilePhone = jest.spyOn(validator, 'isMobilePhone')
-      sut.isValidPhoneNumber('11945752156')
+      sut.hasValidPhoneNumber('11945752156')
       expect(isMobilePhone).toHaveBeenCalledWith('11945752156', 'pt-BR')
     })
 
     it('Should return false if the provided phone number is invalid', () => {
       jest.spyOn(validator, 'isMobilePhone').mockReturnValueOnce(false)
-      const expectedResponse = sut.isValidPhoneNumber('00')
+      const expectedResponse = sut.hasValidPhoneNumber('00')
       expect(expectedResponse).toBeFalsy()
     })
 
     it('Should return true if the provided phone number is valid', () => {
-      const expectedResponse = sut.isValidPhoneNumber('11945752156')
+      const expectedResponse = sut.hasValidPhoneNumber('11945752156')
       expect(expectedResponse).toBeTruthy()
     })
   })

@@ -7,7 +7,7 @@ export const mockValidator = (): IValidator => {
       return true
     }
 
-    isValidPhoneNumber (phone: string): boolean {
+    hasValidPhoneNumber (phone: string): boolean {
       return true
     }
   }
