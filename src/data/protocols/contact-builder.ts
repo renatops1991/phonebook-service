@@ -1,6 +1,7 @@
 import { Contact } from '@/domain/entities/contact'
-import { CreateContactDto } from '@/main/dtos/create-contact.dto'
+import { ContactOutputDto, CreateContactDto } from '@/main/dtos'
 
 export interface IContactBuilder {
   buildContact: (contactDto: CreateContactDto) => Contact
+  buildFetchContact: (contactDto: ContactOutputDto) => Contact
 }
