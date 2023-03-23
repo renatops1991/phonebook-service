@@ -45,8 +45,8 @@ describe('ContactRepositoryMongoAdapter', () => {
 
   describe('fetchContacts', () => {
     const firstContact = fixtureContact()
-    const secondContact = ({ ...fixtureContact(), email: 'bar@example.com' })
-    const thirstContact = ({ ...fixtureContact(), email: 'xis@example.com' })
+    const secondContact = ({ ...fixtureContact(), email: 'bar@example.com', address: { street: 'xis', postcode: '09201245' } })
+    const thirstContact = ({ ...fixtureContact(), email: 'xis@example.com', phones: ['11946578852'] })
 
     const insertContacts = async (): Promise<any> => {
       return (await contactCollection.insertMany([firstContact, secondContact, thirstContact])).insertedIds
@@ -63,6 +63,35 @@ describe('ContactRepositoryMongoAdapter', () => {
       const thirstFetchContact = await contact(insertContact[2])
       const expectResponse = await sut.fetchContacts({})
       expect(expectResponse).toEqual([firstFetchContact, secondFetchContact, thirstFetchContact])
+    })
+
+    it('Should return all contacts with email provided by param', async () => {
+      const insertContact = await insertContacts()
+      const thirstFetchContact = await contact(insertContact[2])
+      const expectResponse = await sut.fetchContacts({ email: 'xis@example.com' })
+      expect(expectResponse).toEqual([thirstFetchContact])
+    })
+
+    it('Should return all contacts with phone provided by param', async () => {
+      const insertContact = await insertContacts()
+      const thirstFetchContact = await contact(insertContact[2])
+      const expectResponse = await sut.fetchContacts({ phone: '11946578852' })
+      expect(expectResponse).toEqual([thirstFetchContact])
+    })
+
+    it('Should return all contacts with address provided by param', async () => {
+      const insertContact = await insertContacts()
+      const firstFetchContact = await contact(insertContact[0])
+      const thirstFetchContact = await contact(insertContact[2])
+      const expectResponse = await sut.fetchContacts({ address: 'foo' })
+      expect(expectResponse).toEqual([firstFetchContact, thirstFetchContact])
+    })
+
+    it('Should return all contacts with postcode provided by param', async () => {
+      const insertContact = await insertContacts()
+      const secondFetchContact = await contact(insertContact[1])
+      const expectResponse = await sut.fetchContacts({ postcode: '09201245' })
+      expect(expectResponse).toEqual([secondFetchContact])
     })
   })
 })
