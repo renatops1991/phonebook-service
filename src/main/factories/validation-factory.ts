@@ -8,7 +8,7 @@ import { ValidationComposite } from '@/validation/validation-composite'
 export const makeValidationFactory = (): ValidationComposite => {
   const validations: IValidation[] = []
 
-  for (const field of ['name', 'email', 'address', 'phone']) {
+  for (const field of ['name', 'email', 'address', 'phones']) {
     validations.push(new RequiredField(field))
   }
 

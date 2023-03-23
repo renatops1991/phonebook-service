@@ -1,3 +1,7 @@
+import paths from './paths'
+import schemas from './schemas'
+import components from './components'
+
 export default {
   openapi: '3.0.0',
   info: {
@@ -10,5 +14,9 @@ export default {
       url: 'http://localhost:3001/api',
       description: 'Main server'
     }
-  ]
+  ],
+  tags: ['Contact'],
+  paths,
+  schemas,
+  components
 }
