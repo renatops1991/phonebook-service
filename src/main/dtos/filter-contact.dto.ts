@@ -3,4 +3,5 @@ export interface FilterContactDto {
   address?: string
   email?: string
   phone?: string
+  postcode?: string
 }

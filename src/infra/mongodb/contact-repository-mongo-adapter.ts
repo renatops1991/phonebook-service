@@ -22,15 +22,25 @@ export class ContactRepositoryMongoAdapter implements IContactRepository {
   }
 
   async fetchContacts (filterContactDto: FilterContactDto): Promise<ContactOutputDto[]> {
-    const { name, email, phone, address } = filterContactDto
-    const filter = !(name ?? email ?? phone ?? address)
+    const { name, email, phone, address, postcode } = filterContactDto
+    const filter = !(name ?? email ?? phone ?? address ?? postcode)
       ? {}
       : {
           $or: [
             { name },
             { email },
-            { phones: phone },
-            { address }
+            {
+              phones: {
+                $elemMatch: {
+                  $eq: phone
+                }
+              }
+            },
+            {
+              'address.street': address
+            }, {
+              'address.postcode': postcode
+            }
           ]
         }
     const contacts = await this.fetchContactCollection().find(
