@@ -1,7 +1,6 @@
-import { ContactOutputDto } from '@/main/dtos/contact-output.dto'
-import { CreateContactDto } from '@/main/dtos/create-contact.dto'
-
+import { ContactOutputDto, CreateContactDto, FilterContactDto } from '@/main/dtos'
 export interface IContactRepository {
   create: (contactDto: CreateContactDto) => Promise<ContactOutputDto>
   hasContact: (email: string) => Promise<boolean>
+  fetchContacts: (filterContactDto: FilterContactDto) => Promise<ContactOutputDto[]>
 }
