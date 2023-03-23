@@ -31,3 +31,6 @@ npm run test:unit
 # Running integration tests
 npm run test:e2e
 ```
+
+## Documentation
+After running the application, you can access the documentation, through the url `http://localhost:3001/docs`
