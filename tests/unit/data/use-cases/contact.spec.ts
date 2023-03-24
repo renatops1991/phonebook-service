@@ -5,7 +5,7 @@ import { Contact as ContactEntity } from '@/domain/entities/contact'
 import { FilterContactDto } from '@/main/dtos'
 import { ContactOutputDto } from '@/main/dtos/contact-output.dto'
 import { CreateContactDto } from '@/main/dtos/create-contact.dto'
-import { fixtureContact, fixtureContactOutput } from '@/tests/fixtures/fixturesContact'
+import { fixtureContact, fixtureContactOutput, fixtureFilterContact } from '@/tests/fixtures/fixturesContact'
 
 class ContactRepositoryStub implements IContactRepository {
   async create (contactDto: CreateContactDto): Promise<ContactOutputDto> {
@@ -70,6 +70,19 @@ describe('Contact UseCase', () => {
       await sut.create(fixtureContact())
       const expectedResponse = await sut.create(fixtureContact())
       expect(expectedResponse).toBeNull()
+    })
+  })
+
+  describe('fetchContacts method', () => {
+    it('Should call fetch contacts method of the repository with correct values', async () => {
+      const fetchContactsSpy = jest
+        .spyOn(contactRepositoryStub, 'fetchContacts')
+      await sut.fetchContacts(fixtureFilterContact())
+      expect(fetchContactsSpy).toHaveBeenCalledWith(fixtureFilterContact())
+    })
+    it('Should return an contacts array', async () => {
+      const expectedResponse = await sut.fetchContacts(fixtureFilterContact())
+      expect(expectedResponse).toEqual([fixtureContactOutput()])
     })
   })
 })
