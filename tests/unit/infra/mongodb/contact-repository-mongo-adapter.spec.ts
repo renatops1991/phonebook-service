@@ -45,8 +45,8 @@ describe('ContactRepositoryMongoAdapter', () => {
 
   describe('fetchContacts', () => {
     const firstContact = fixtureContact()
-    const secondContact = ({ ...fixtureContact(), email: 'bar@example.com', address: { street: 'xis', postcode: '09201245' } })
-    const thirstContact = ({ ...fixtureContact(), email: 'xis@example.com', phones: ['11946578852'] })
+    const secondContact = ({ ...fixtureContact(), name: 'xis', email: 'bar@example.com', address: { street: 'xis', postcode: '09201245' } })
+    const thirstContact = ({ ...fixtureContact(), name: 'bar', email: 'xis@example.com', phones: ['11946578852'] })
 
     const insertContacts = async (): Promise<any> => {
       return (await contactCollection.insertMany([firstContact, secondContact, thirstContact])).insertedIds
@@ -92,6 +92,13 @@ describe('ContactRepositoryMongoAdapter', () => {
       const secondFetchContact = await contact(insertContact[1])
       const expectResponse = await sut.fetchContacts({ postcode: '09201245' })
       expect(expectResponse).toEqual([secondFetchContact])
+    })
+
+    it('Should return all contacts with name provided by param', async () => {
+      const insertContact = await insertContacts()
+      const firstFetchContact = await contact(insertContact[0])
+      const expectResponse = await sut.fetchContacts({ name: 'John foo bar' })
+      expect(expectResponse).toEqual([firstFetchContact])
     })
   })
 })
