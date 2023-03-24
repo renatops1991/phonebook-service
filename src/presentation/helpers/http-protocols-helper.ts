@@ -26,6 +26,11 @@ export const forbidden = (error: Error): HttpResponseType => ({
   body: error
 })
 
+export const notFound = (error: Error): HttpResponseType => ({
+  statusCode: 404,
+  body: error
+})
+
 export const serverError = (error: Error): HttpResponseType => ({
   statusCode: 500,
   body: new ServerError(error.stack as string).serializeErrors()
