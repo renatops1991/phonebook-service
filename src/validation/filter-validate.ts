@@ -3,12 +3,14 @@ import { IValidation } from '@/presentation/protocols/validation'
 
 export class FilterValidate implements IValidation {
   constructor (
-    private readonly fieldName: string
+    private readonly fieldAllowedInTheFilter: string[]
   ) { }
 
   validate (input: any): Error | null {
-    if (input[this.fieldName]) {
-      return new InvalidFilterError().serializeErrors()
+    for (const fieldKey in input) {
+      if (!this.fieldAllowedInTheFilter.includes(fieldKey)) {
+        return new InvalidFilterError().serializeErrors()
+      }
     }
     return null
   }
