@@ -14,7 +14,7 @@ export const contactPath = {
     responses: {
       201: {
         description: 'Created Successfully',
-        $ref: '#/components/success'
+        $ref: '#/components/created'
       },
       400: {
         description: 'Bad request',
