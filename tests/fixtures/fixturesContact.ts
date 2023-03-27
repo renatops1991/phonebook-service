@@ -1,6 +1,6 @@
 import { CreateContactDto } from '@/main/dtos/create-contact.dto'
 import { ContactOutputDto } from '@/main/dtos/contact-output.dto'
-import { FilterContactDto } from '@/main/dtos'
+import { FilterContactDto, UpdateContactDto } from '@/main/dtos'
 
 export const fixtureContact = (): CreateContactDto => ({
   name: 'John foo bar',
@@ -25,4 +25,18 @@ export const fixtureFilterContact = (): FilterContactDto => ({
   postcode: '09452686',
   phone: '1194657882',
   address: 'foo'
+})
+
+export const fixtureUpdateContact = (): UpdateContactDto => ({
+  name: 'John',
+  address: {
+    street: 'foo',
+    number: '45',
+    postcode: '09452686',
+    neighborhood: 'foo',
+    complements: 'foo',
+    city: 'foo',
+    state: 'bar'
+  },
+  phones: ['1165985563', '1165985562']
 })

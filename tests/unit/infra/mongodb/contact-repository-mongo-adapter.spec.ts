@@ -1,6 +1,6 @@
 import { MongoHelper } from '@/infra/mongodb/mongo-helper'
 import { ContactRepositoryMongoAdapter } from '@/infra/mongodb/contact-repository-mongo-adapter'
-import { fixtureContact } from '@/tests/fixtures/fixturesContact'
+import { fixtureContact, fixtureUpdateContact } from '@/tests/fixtures/fixturesContact'
 import { Collection } from 'mongodb'
 import dotenv from 'dotenv'
 
@@ -99,6 +99,26 @@ describe('ContactRepositoryMongoAdapter', () => {
       const firstFetchContact = await contact(insertContact[0])
       const expectResponse = await sut.fetchContacts({ name: 'John foo bar' })
       expect(expectResponse).toEqual([firstFetchContact])
+    })
+  })
+
+  describe('update', () => {
+    it('Should update contact and return on succeeds', async () => {
+      await contactCollection.insertOne(fixtureContact())
+      const expectedResponse = await sut.update('john@foo.com', fixtureUpdateContact())
+      expect(expectedResponse).toBeTruthy()
+      expect(expectedResponse.name).toEqual('John')
+      expect(expectedResponse.phones).toEqual(['1165985563', '1165985562'])
+      expect(expectedResponse.address).toEqual(fixtureContact().address)
+    })
+
+    it('Should update contact only field provided', async () => {
+      await contactCollection.insertOne(fixtureContact())
+      const expectedResponse = await sut.update('john@foo.com', { name: 'Foo' })
+      expect(expectedResponse).toBeTruthy()
+      expect(expectedResponse.name).toEqual('Foo')
+      expect(expectedResponse.phones).toEqual(fixtureContact().phones)
+      expect(expectedResponse.address).toEqual(fixtureContact().address)
     })
   })
 })

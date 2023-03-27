@@ -19,7 +19,7 @@ class ContactStub implements IContact {
     return await new Promise(resolve => { resolve(fixtureContactOutput()) })
   }
 
-  update: (updateContactDto: UpdateContactDto) => Promise<ContactOutputDto>
+  update: (email: string, updateContactDto: UpdateContactDto) => Promise<ContactOutputDto>
 }
 const validationStub = mockValidation()
 const contactStub = new ContactStub()
