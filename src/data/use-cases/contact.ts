@@ -1,5 +1,5 @@
 import { IContact } from '@/domain/protocols/contact'
-import { FilterContactDto } from '@/main/dtos'
+import { FilterContactDto, UpdateContactDto } from '@/main/dtos'
 import { ContactOutputDto } from '@/main/dtos/contact-output.dto'
 import { CreateContactDto } from '@/main/dtos/create-contact.dto'
 import { IContactBuilder } from '../protocols/contact-builder'
@@ -24,4 +24,6 @@ export class Contact implements IContact {
   async fetchContacts (filterContactDto: FilterContactDto): Promise<ContactOutputDto[]> {
     return await this.contactRepository.fetchContacts(filterContactDto)
   }
+
+  update: (email: string, updateContactDto: UpdateContactDto) => Promise<ContactOutputDto>
 }
