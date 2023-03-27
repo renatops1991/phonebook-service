@@ -1,23 +1,13 @@
-import { IContact } from '@/domain/protocols/contact'
-import { FilterContactDto, UpdateContactDto } from '@/main/dtos'
-import { ContactOutputDto } from '@/main/dtos/contact-output.dto'
-import { CreateContactDto } from '@/main/dtos/create-contact.dto'
 import { CreateContact } from '@/presentation/controllers/create-contact'
 import { EmailInUseError } from '@/presentation/errors/email-in-use-error'
 import { ServerError } from '@/presentation/errors/server-error'
 import { badRequest, forbidden, serverError } from '@/presentation/helpers/http-protocols-helper'
 import { fixtureContact, fixtureContactOutput } from '@/tests/fixtures/fixturesContact'
+import { contactUseCaseStub } from '@/tests/mocks/mock-contact'
 import { mockValidation } from '@/tests/mocks/mock-validate'
 
-class ContactStub implements IContact {
-  update: (email: string, updateContactDto: UpdateContactDto) => Promise<ContactOutputDto>
-  fetchContacts: (filterContactDto: FilterContactDto) => Promise<ContactOutputDto[]>
-  async create (contactDto: CreateContactDto): Promise<ContactOutputDto | null> {
-    return await new Promise(resolve => { resolve(fixtureContactOutput()) })
-  }
-}
 const validationStub = mockValidation()
-const contactStub = new ContactStub()
+const contactStub = contactUseCaseStub()
 const sut = new CreateContact(contactStub, validationStub)
 describe('CreateContactController', () => {
   it('Should call create method of the Contact UseCase with correct values', async () => {
