@@ -3,7 +3,7 @@ import { ContactOutputDto } from '@/main/dtos/contact-output.dto'
 import { CreateContactDto } from '@/main/dtos/create-contact.dto'
 import { MongoHelper } from './mongo-helper'
 import { Collection } from 'mongodb'
-import { FilterContactDto } from '@/main/dtos'
+import { FilterContactDto, UpdateContactDto } from '@/main/dtos'
 
 export class ContactRepositoryMongoAdapter implements IContactRepository {
   private userCollection: Collection
@@ -57,6 +57,36 @@ export class ContactRepositoryMongoAdapter implements IContactRepository {
     ).toArray()
 
     return MongoHelper.mapCollection(contacts)
+  }
+
+  async update (email: string, updateContactDto: UpdateContactDto): Promise<ContactOutputDto> {
+    const contact = await this.fetchContactCollection().findOneAndUpdate(
+      {
+        email
+      },
+      {
+        $set: this.getFieldsWithValidValues(updateContactDto)
+      },
+      {
+        upsert: true,
+        returnDocument: 'after',
+        projection: {
+          _id: 1,
+          name: 1,
+          email: 1,
+          address: 1,
+          phones: 1
+        }
+      }
+    )
+
+    return MongoHelper.map(contact.value)
+  }
+
+  private getFieldsWithValidValues (objectFields: any): Record<string, unknown> {
+    return Object.fromEntries(
+      Object.entries(objectFields).filter(([_, value]) => !!value)
+    )
   }
 
   private fetchContactCollection (): Collection {
