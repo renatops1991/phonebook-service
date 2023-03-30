@@ -26,7 +26,13 @@ export class Contact implements IContact {
   }
 
   async update (email: string, updateContactDto: UpdateContactDto): Promise<ContactOutputDto | null> {
-    await this.contactRepository.hasContact(email)
+    const hasContact = await this.contactRepository.hasContact(email)
+
+    if (!hasContact) {
+      return null
+    }
+
+    await this.contactRepository.update(email, updateContactDto)
 
     return null
   }
