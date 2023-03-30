@@ -25,5 +25,9 @@ export class Contact implements IContact {
     return await this.contactRepository.fetchContacts(filterContactDto)
   }
 
-  update: (email: string, updateContactDto: UpdateContactDto) => Promise<ContactOutputDto>
+  async update (email: string, updateContactDto: UpdateContactDto): Promise<ContactOutputDto | null> {
+    await this.contactRepository.hasContact(email)
+
+    return null
+  }
 }

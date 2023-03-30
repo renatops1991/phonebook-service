@@ -8,5 +8,5 @@ import {
 export interface IContact {
   create: (contactDto: CreateContactDto) => Promise<ContactOutputDto | null>
   fetchContacts: (filterContactDto: FilterContactDto) => Promise<ContactOutputDto[]>
-  update: (email: string, updateContactDto: UpdateContactDto) => Promise<ContactOutputDto>
+  update: (email: string, updateContactDto: UpdateContactDto) => Promise<ContactOutputDto | null>
 }
