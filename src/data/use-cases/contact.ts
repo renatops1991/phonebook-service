@@ -32,8 +32,6 @@ export class Contact implements IContact {
       return null
     }
 
-    await this.contactRepository.update(email, updateContactDto)
-
-    return null
+    return await this.contactRepository.update(email, updateContactDto)
   }
 }
