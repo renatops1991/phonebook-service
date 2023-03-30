@@ -25,7 +25,21 @@ export const mockContactRepositoryStub = (): IContactRepository => {
 
     async update (email: string, updateContactDto: UpdateContactDto): Promise<ContactOutputDto> {
       return await new Promise(resolve => {
-        resolve(fixtureContactOutput())
+        resolve({
+          id: 'foo',
+          name: 'John',
+          email: 'john@foo.com',
+          address: {
+            street: 'foo',
+            number: '45',
+            postcode: '09452686',
+            neighborhood: 'foo',
+            complements: 'foo',
+            city: 'foo',
+            state: 'bar'
+          },
+          phones: ['1165985563', '1165985562']
+        })
       })
     }
   }

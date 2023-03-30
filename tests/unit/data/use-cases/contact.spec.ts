@@ -1,5 +1,5 @@
 import { Contact } from '@/data/use-cases/contact'
-import { fixtureContact, fixtureContactOutput, fixtureFilterContact, fixtureUpdateContact } from '@/tests/fixtures/fixturesContact'
+import { fixtureContact, fixtureContactOutput, fixtureFilterContact, fixtureUpdateContact, fixtureUpdateContactOutput } from '@/tests/fixtures/fixturesContact'
 import { mockContactBuilderStub, mockContactRepositoryStub } from '@/tests/mocks/mock-contact'
 
 const contactRepositoryStub = mockContactRepositoryStub()
@@ -76,6 +76,14 @@ describe('Contact UseCase', () => {
         .mockReturnValue(new Promise(resolve => { resolve(true) }))
       await sut.update('foo@example.com', fixtureUpdateContact())
       expect(updateSpy).toHaveBeenCalledWith('foo@example.com', fixtureUpdateContact())
+    })
+
+    it('Should return updated contact on succeeds', async () => {
+      jest
+        .spyOn(contactRepositoryStub, 'hasContact')
+        .mockReturnValue(new Promise(resolve => { resolve(true) }))
+      const expectedResponse = await sut.update('john@foo.com', fixtureUpdateContact())
+      expect(expectedResponse).toEqual(fixtureUpdateContactOutput())
     })
   })
 })

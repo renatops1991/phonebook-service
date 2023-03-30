@@ -40,3 +40,10 @@ export const fixtureUpdateContact = (): UpdateContactDto => ({
   },
   phones: ['1165985563', '1165985562']
 })
+
+export const fixtureUpdateContactOutput = (): ContactOutputDto =>
+  Object.assign({
+    ...fixtureUpdateContact(),
+    id: 'foo',
+    email: 'john@foo.com'
+  })
