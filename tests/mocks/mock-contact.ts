@@ -22,6 +22,12 @@ export const mockContactRepositoryStub = (): IContactRepository => {
         resolve([fixtureContactOutput()])
       })
     }
+
+    async update (email: string, updateContactDto: UpdateContactDto): Promise<ContactOutputDto> {
+      return await new Promise(resolve => {
+        resolve(fixtureContactOutput())
+      })
+    }
   }
 
   return new ContactRepositoryStub()

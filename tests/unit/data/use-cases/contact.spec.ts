@@ -60,5 +60,22 @@ describe('Contact UseCase', () => {
       await sut.update('foo@example.com', fixtureUpdateContact())
       expect(hasContactSpy).toHaveBeenCalledWith('foo@example.com')
     })
+
+    it('Should return null if contact return false', async () => {
+      jest
+        .spyOn(contactRepositoryStub, 'hasContact')
+      const expectedResponse = await sut.update('foo@example.com', fixtureUpdateContact())
+      expect(expectedResponse).toBeNull()
+    })
+
+    it('Should call update method of the repository class with correct values if contact exists', async () => {
+      const updateSpy = jest
+        .spyOn(contactRepositoryStub, 'update')
+      jest
+        .spyOn(contactRepositoryStub, 'hasContact')
+        .mockReturnValue(new Promise(resolve => { resolve(true) }))
+      await sut.update('foo@example.com', fixtureUpdateContact())
+      expect(updateSpy).toHaveBeenCalledWith('foo@example.com', fixtureUpdateContact())
+    })
   })
 })
