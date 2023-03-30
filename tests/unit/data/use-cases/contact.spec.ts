@@ -33,8 +33,7 @@ describe('Contact UseCase', () => {
     it('Should return null if hasContact method returns true', async () => {
       jest
         .spyOn(contactRepositoryStub, 'hasContact')
-        .mockReturnValue(new Promise(resolve => { resolve(true) }))
-      await sut.create(fixtureContact())
+        .mockReturnValueOnce(new Promise(resolve => { resolve(true) }))
       const expectedResponse = await sut.create(fixtureContact())
       expect(expectedResponse).toBeNull()
     })
@@ -73,7 +72,7 @@ describe('Contact UseCase', () => {
         .spyOn(contactRepositoryStub, 'update')
       jest
         .spyOn(contactRepositoryStub, 'hasContact')
-        .mockReturnValue(new Promise(resolve => { resolve(true) }))
+        .mockReturnValueOnce(new Promise(resolve => { resolve(true) }))
       await sut.update('foo@example.com', fixtureUpdateContact())
       expect(updateSpy).toHaveBeenCalledWith('foo@example.com', fixtureUpdateContact())
     })
@@ -81,7 +80,7 @@ describe('Contact UseCase', () => {
     it('Should return updated contact on succeeds', async () => {
       jest
         .spyOn(contactRepositoryStub, 'hasContact')
-        .mockReturnValue(new Promise(resolve => { resolve(true) }))
+        .mockReturnValueOnce(new Promise(resolve => { resolve(true) }))
       const expectedResponse = await sut.update('john@foo.com', fixtureUpdateContact())
       expect(expectedResponse).toEqual(fixtureUpdateContactOutput())
     })
