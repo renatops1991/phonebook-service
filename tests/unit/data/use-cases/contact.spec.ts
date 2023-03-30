@@ -1,5 +1,5 @@
 import { Contact } from '@/data/use-cases/contact'
-import { fixtureContact, fixtureContactOutput, fixtureFilterContact } from '@/tests/fixtures/fixturesContact'
+import { fixtureContact, fixtureContactOutput, fixtureFilterContact, fixtureUpdateContact } from '@/tests/fixtures/fixturesContact'
 import { mockContactBuilderStub, mockContactRepositoryStub } from '@/tests/mocks/mock-contact'
 
 const contactRepositoryStub = mockContactRepositoryStub()
@@ -8,7 +8,7 @@ const sut = new Contact(contactRepositoryStub, contactBuilderStub)
 
 describe('Contact UseCase', () => {
   describe('Create Method', () => {
-    it('Should call buildContact method of ContactBuilder class with correct values ', async () => {
+    it('Should call buildContact method of ContactBuilder class with correct values', async () => {
       const buildContactSpy = jest.spyOn(contactBuilderStub, 'buildContact')
       await sut.create(fixtureContact())
       expect(buildContactSpy).toHaveBeenCalledWith(fixtureContact())
@@ -50,6 +50,15 @@ describe('Contact UseCase', () => {
     it('Should return an contacts array', async () => {
       const expectedResponse = await sut.fetchContacts(fixtureFilterContact())
       expect(expectedResponse).toEqual([fixtureContactOutput()])
+    })
+  })
+
+  describe('Update method', () => {
+    it('Should call hasContact method of repository class with correct values', async () => {
+      const hasContactSpy = jest
+        .spyOn(contactRepositoryStub, 'hasContact')
+      await sut.update('foo@example.com', fixtureUpdateContact())
+      expect(hasContactSpy).toHaveBeenCalledWith('foo@example.com')
     })
   })
 })
