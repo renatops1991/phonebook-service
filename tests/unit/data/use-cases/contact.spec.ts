@@ -1,5 +1,11 @@
 import { Contact } from '@/data/use-cases/contact'
-import { fixtureContact, fixtureContactOutput, fixtureFilterContact, fixtureUpdateContact, fixtureUpdateContactOutput } from '@/tests/fixtures/fixturesContact'
+import {
+  fixtureContact,
+  fixtureContactOutput,
+  fixtureFilterContact,
+  fixtureUpdateContact,
+  fixtureUpdateContactOutput
+} from '@/tests/fixtures/fixturesContact'
 import { mockContactBuilderStub, mockContactRepositoryStub } from '@/tests/mocks/mock-contact'
 
 const contactRepositoryStub = mockContactRepositoryStub()
