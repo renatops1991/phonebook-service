@@ -4,7 +4,6 @@ import { CreateContactDto } from '@/main/dtos/create-contact.dto'
 import { MongoHelper } from './mongo-helper'
 import { Collection } from 'mongodb'
 import { FilterContactDto, UpdateContactDto } from '@/main/dtos'
-import * as utils from '@/main/utils'
 
 export class ContactRepositoryMongoAdapter implements IContactRepository {
   private userCollection: Collection
@@ -66,7 +65,7 @@ export class ContactRepositoryMongoAdapter implements IContactRepository {
         email
       },
       {
-        $set: utils.getFieldsWithValidValues(updateContactDto)
+        $set: updateContactDto
       },
       {
         upsert: true,

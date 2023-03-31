@@ -32,6 +32,8 @@ export class Contact implements IContact {
       return null
     }
 
-    return await this.contactRepository.update(email, updateContactDto)
+    const buildUpdateContact = this.contactBuilder?.buildUpdateContact(updateContactDto)
+
+    return await this.contactRepository.update(email, buildUpdateContact as UpdateContactDto)
   }
 }
