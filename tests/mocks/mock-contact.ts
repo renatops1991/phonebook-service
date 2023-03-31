@@ -50,10 +50,6 @@ export const mockContactRepositoryStub = (): IContactRepository => {
 
 export const mockContactBuilderStub = (): IContactBuilder => {
   class ContactBuilderStub implements IContactBuilder {
-    buildFetchContact (contactDto: ContactOutputDto): Contact {
-      return fixtureContactOutput()
-    }
-
     buildContact (contactDto: CreateContactDto): Contact {
       return fixtureContact()
     }
