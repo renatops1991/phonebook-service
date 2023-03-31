@@ -1,9 +1,9 @@
 import { IContactBuilder } from '@/data/protocols/contact-builder'
 import { IContactRepository } from '@/data/protocols/contact-repository'
 import { Contact } from '@/domain/entities/contact'
+import { UpdateContact } from '@/domain/entities/update-contact'
 import { IContact } from '@/domain/protocols/contact'
 import { ContactOutputDto, CreateContactDto, FilterContactDto, UpdateContactDto } from '@/main/dtos'
-import { UpdateContactOutputDto } from '@/main/dtos/update-contact-output.dto'
 import { fixtureContact, fixtureContactOutput, fixtureUpdateContact } from '../fixtures/fixturesContact'
 
 export const mockContactRepositoryStub = (): IContactRepository => {
@@ -54,8 +54,8 @@ export const mockContactBuilderStub = (): IContactBuilder => {
       return fixtureContact()
     }
 
-    buildUpdateContact (updateContactDto: UpdateContactDto): UpdateContactOutputDto {
-      return fixtureUpdateContact()
+    buildUpdateContact (updateContactDto: UpdateContactDto): UpdateContact {
+      return fixtureUpdateContact() as UpdateContact
     }
   }
 

@@ -8,7 +8,7 @@ import { IContactRepository } from '../protocols/contact-repository'
 export class Contact implements IContact {
   constructor (
     private readonly contactRepository: IContactRepository,
-    private readonly contactBuilder?: IContactBuilder
+    private readonly contactBuilder: IContactBuilder
   ) { }
 
   async create (contactDto: CreateContactDto): Promise<ContactOutputDto | null> {
@@ -32,8 +32,8 @@ export class Contact implements IContact {
       return null
     }
 
-    const buildUpdateContact = this.contactBuilder?.buildUpdateContact(updateContactDto)
+    const buildUpdateContact = this.contactBuilder.buildUpdateContact(updateContactDto)
 
-    return await this.contactRepository.update(email, buildUpdateContact as UpdateContactDto)
+    return await this.contactRepository.update(email, buildUpdateContact)
   }
 }

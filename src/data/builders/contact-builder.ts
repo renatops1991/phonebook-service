@@ -1,8 +1,8 @@
 import { Address } from '@/domain/entities/address'
 import { Contact } from '@/domain/entities/contact'
+import { UpdateContact } from '@/domain/entities/update-contact'
 import { UpdateContactDto } from '@/main/dtos'
 import { CreateContactDto } from '@/main/dtos/create-contact.dto'
-import { UpdateContactOutputDto } from '@/main/dtos/update-contact-output.dto'
 import { IContactBuilder } from '../protocols/contact-builder'
 
 export class ContactBuilder implements IContactBuilder {
@@ -15,8 +15,8 @@ export class ContactBuilder implements IContactBuilder {
     return contact
   }
 
-  buildUpdateContact (updateContactDto: UpdateContactDto): UpdateContactOutputDto {
-    const contact = new Contact()
+  buildUpdateContact (updateContactDto: UpdateContactDto): UpdateContact {
+    const contact = new UpdateContact()
 
     if (updateContactDto.name) {
       contact.name = updateContactDto.name
@@ -30,6 +30,6 @@ export class ContactBuilder implements IContactBuilder {
       contact.address = Address.makeAddress(updateContactDto.address)
     }
 
-    return contact as UpdateContactOutputDto
+    return contact
   }
 }
