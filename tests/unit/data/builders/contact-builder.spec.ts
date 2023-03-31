@@ -1,6 +1,6 @@
 import { ContactBuilder } from '@/data/builders/contact-builder'
 import { Contact } from '@/domain/entities/contact'
-import { fixtureContact, fixtureContactOutput } from '@/tests/fixtures/fixturesContact'
+import { fixtureContact, fixtureContactOutput, fixtureUpdateContact } from '@/tests/fixtures/fixturesContact'
 
 describe('ContactBuilder', () => {
   describe('buildContact Method', () => {
@@ -42,6 +42,14 @@ describe('ContactBuilder', () => {
         phones: ['1194657882', '11457895642']
       }
       expect(sut.buildFetchContact(contactDto)).toEqual(expectedResponse)
+    })
+  })
+
+  describe('buildUpdateContact method', () => {
+    it('Should build update contact correctly', () => {
+      const sut = new ContactBuilder()
+      const updateContactDto = fixtureUpdateContact()
+      expect(sut.buildUpdateContact(updateContactDto)).toEqual(fixtureUpdateContact())
     })
   })
 })

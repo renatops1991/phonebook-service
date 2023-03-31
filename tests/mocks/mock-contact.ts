@@ -3,7 +3,8 @@ import { IContactRepository } from '@/data/protocols/contact-repository'
 import { Contact } from '@/domain/entities/contact'
 import { IContact } from '@/domain/protocols/contact'
 import { ContactOutputDto, CreateContactDto, FilterContactDto, UpdateContactDto } from '@/main/dtos'
-import { fixtureContact, fixtureContactOutput } from '../fixtures/fixturesContact'
+import { UpdateContactOutputDto } from '@/main/dtos/update-contact-output.dto'
+import { fixtureContact, fixtureContactOutput, fixtureUpdateContact } from '../fixtures/fixturesContact'
 
 export const mockContactRepositoryStub = (): IContactRepository => {
   class ContactRepositoryStub implements IContactRepository {
@@ -55,6 +56,10 @@ export const mockContactBuilderStub = (): IContactBuilder => {
 
     buildContact (contactDto: CreateContactDto): Contact {
       return fixtureContact()
+    }
+
+    buildUpdateContact (updateContactDto: UpdateContactDto): UpdateContactOutputDto {
+      return fixtureUpdateContact()
     }
   }
 
