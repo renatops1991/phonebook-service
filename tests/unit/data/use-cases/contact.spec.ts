@@ -67,6 +67,16 @@ describe('Contact UseCase', () => {
       expect(expectedResponse).toBeNull()
     })
 
+    it('Should call buildUpdateContact method with correct values', async () => {
+      jest
+        .spyOn(contactRepositoryStub, 'hasContact')
+        .mockReturnValueOnce(new Promise(resolve => { resolve(true) }))
+      const buildUpdateContact = jest
+        .spyOn(contactBuilderStub, 'buildUpdateContact')
+      await sut.update('john@foo.com', fixtureUpdateContact())
+      expect(buildUpdateContact).toHaveBeenCalledWith(fixtureUpdateContact())
+    })
+
     it('Should call update method of the repository class with correct values if contact exists', async () => {
       const updateSpy = jest
         .spyOn(contactRepositoryStub, 'update')
