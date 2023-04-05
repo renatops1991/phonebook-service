@@ -31,3 +31,13 @@ export const makeFetchValidationFactory = (): ValidationComposite => {
 
   return new ValidationComposite(validations)
 }
+
+export const makeUpdateValidationFactory = (): ValidationComposite => {
+  const validations: IValidation[] = []
+
+  validations.push(
+    new PhoneNumberValidate('phones', new ValidatorAdapter())
+  )
+
+  return new ValidationComposite(validations)
+}
