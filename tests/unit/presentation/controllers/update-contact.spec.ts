@@ -1,11 +1,14 @@
 import { UpdateContact } from '@/presentation/controllers/update-contact'
+import { InvalidParamError } from '@/presentation/errors/invalid-param-error'
 import { ServerError } from '@/presentation/errors/server-error'
-import { serverError, success } from '@/presentation/helpers/http-protocols-helper'
+import { badRequest, serverError, success } from '@/presentation/helpers/http-protocols-helper'
 import { fixtureUpdateContact, fixtureUpdateContactOutput } from '@/tests/fixtures/fixturesContact'
 import { contactUseCaseStub } from '@/tests/mocks/mock-contact'
+import { mockValidation } from '@/tests/mocks/mock-validate'
 
+const validationStub = mockValidation()
 const contactStub = contactUseCaseStub()
-const sut = new UpdateContact(contactStub)
+const sut = new UpdateContact(contactStub, validationStub)
 describe('updateContactController', () => {
   const updateContactDto = Object.assign({
     ...fixtureUpdateContact(),
@@ -18,6 +21,23 @@ describe('updateContactController', () => {
 
     await sut.handle(updateContactDto)
     expect(updateSpy).toHaveBeenCalledWith(updateContactDto.email, updateContactDto)
+  })
+
+  it('Should call validation with correct values', async () => {
+    const validateSpy = jest
+      .spyOn(validationStub, 'validate')
+
+    await sut.handle(updateContactDto)
+    expect(validateSpy).toHaveBeenCalledWith(updateContactDto)
+  })
+
+  it('Should return 400 error if validate method return error', async () => {
+    jest
+      .spyOn(validationStub, 'validate')
+      .mockReturnValueOnce(new InvalidParamError('phones').serializeErrors())
+
+    const expectedResponse = await sut.handle(updateContactDto)
+    expect(expectedResponse).toEqual(badRequest(new InvalidParamError('phones').serializeErrors()))
   })
 
   it('Should return 200 status code and contact updated on succeeds', async () => {
