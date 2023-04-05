@@ -5,6 +5,7 @@ export const expressAdapter = (controller: IController): RequestHandler =>
   async (request: Request, response: Response) => {
     const httpRequest = {
       ...(request.body || {}),
+      ...(request.params || {}),
       ...(request.query || {})
     }
 
