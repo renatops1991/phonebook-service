@@ -4,7 +4,7 @@ import { Contact } from '@/domain/entities/contact'
 import { UpdateContact } from '@/domain/entities/update-contact'
 import { IContact } from '@/domain/protocols/contact'
 import { ContactOutputDto, CreateContactDto, FilterContactDto, UpdateContactDto } from '@/main/dtos'
-import { fixtureContact, fixtureContactOutput, fixtureUpdateContact } from '../fixtures/fixturesContact'
+import { fixtureContact, fixtureContactOutput, fixtureUpdateContact, fixtureUpdateContactOutput } from '../fixtures/fixturesContact'
 
 export const mockContactRepositoryStub = (): IContactRepository => {
   class ContactRepositoryStub implements IContactRepository {
@@ -72,7 +72,9 @@ export const contactUseCaseStub = (): IContact => {
       return await new Promise(resolve => { resolve(fixtureContactOutput()) })
     }
 
-    update: (email: string, updateContactDto: UpdateContactDto) => Promise<ContactOutputDto>
+    async update (email: string, updateContactDto: UpdateContactDto): Promise<ContactOutputDto> {
+      return await new Promise(resolve => { resolve(fixtureUpdateContactOutput()) })
+    }
   }
 
   return new ContactStub()
