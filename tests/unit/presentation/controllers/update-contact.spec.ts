@@ -1,7 +1,7 @@
 import { UpdateContact } from '@/presentation/controllers/update-contact'
 import { ServerError } from '@/presentation/errors/server-error'
-import { serverError } from '@/presentation/helpers/http-protocols-helper'
-import { fixtureUpdateContact } from '@/tests/fixtures/fixturesContact'
+import { serverError, success } from '@/presentation/helpers/http-protocols-helper'
+import { fixtureUpdateContact, fixtureUpdateContactOutput } from '@/tests/fixtures/fixturesContact'
 import { contactUseCaseStub } from '@/tests/mocks/mock-contact'
 
 const contactStub = contactUseCaseStub()
@@ -18,6 +18,14 @@ describe('updateContactController', () => {
 
     await sut.handle(updateContactDto)
     expect(updateSpy).toHaveBeenCalledWith(updateContactDto.email, updateContactDto)
+  })
+
+  it('Should return 200 status code and contact updated on succeeds', async () => {
+    jest
+      .spyOn(contactStub, 'update')
+
+    const expectedResponse = await sut.handle(updateContactDto)
+    expect(expectedResponse).toEqual(success(fixtureUpdateContactOutput()))
   })
 
   it('Should return 500 error if update method throw exception error', async () => {
