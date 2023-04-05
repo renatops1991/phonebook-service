@@ -45,8 +45,8 @@ describe('updateContactController', () => {
   it('Should return 400 error email is not provided by parameter', async () => {
     jest.spyOn(contactStub, 'update')
 
-    delete updateContactDto.email
-    const expectedResponse = await sut.handle(updateContactDto)
+    const updateContactWithoutEmail = fixtureUpdateContact()
+    const expectedResponse = await sut.handle(updateContactWithoutEmail)
     expect(expectedResponse).toEqual(badRequest(new MissingMandatoryParamError('email').serializeErrors()))
   })
 
