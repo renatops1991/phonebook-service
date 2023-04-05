@@ -1,6 +1,7 @@
-import { contactsSchema, createContactParamsSchema } from './schemas/'
+import { contactsSchema, createContactParamsSchema, updateContactParamsSchema } from './schemas/'
 
 export default {
   contact: createContactParamsSchema,
-  contacts: contactsSchema
+  contacts: contactsSchema,
+  updateContact: updateContactParamsSchema
 }

@@ -1,5 +1,5 @@
 export const success = {
-  description: 'Search found successfully',
+  description: 'Successfully',
   content: {
     'application/json': {
       schema: {

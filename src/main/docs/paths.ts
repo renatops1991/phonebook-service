@@ -1,6 +1,7 @@
-import { contactPath, fetchContactsPath } from './paths/'
+import { contactPath, fetchContactsPath, updateContactPath } from './paths/'
 
 export default {
   '/contact': contactPath,
-  '/contacts': fetchContactsPath
+  '/contacts': fetchContactsPath,
+  '/contact/{email}': updateContactPath
 }
