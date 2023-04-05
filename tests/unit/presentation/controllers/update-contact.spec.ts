@@ -1,7 +1,8 @@
 import { UpdateContact } from '@/presentation/controllers/update-contact'
 import { InvalidParamError } from '@/presentation/errors/invalid-param-error'
+import { NotFoundError } from '@/presentation/errors/not-found-error'
 import { ServerError } from '@/presentation/errors/server-error'
-import { badRequest, serverError, success } from '@/presentation/helpers/http-protocols-helper'
+import { badRequest, notFound, serverError, success } from '@/presentation/helpers/http-protocols-helper'
 import { fixtureUpdateContact, fixtureUpdateContactOutput } from '@/tests/fixtures/fixturesContact'
 import { contactUseCaseStub } from '@/tests/mocks/mock-contact'
 import { mockValidation } from '@/tests/mocks/mock-validate'
@@ -38,6 +39,15 @@ describe('updateContactController', () => {
 
     const expectedResponse = await sut.handle(updateContactDto)
     expect(expectedResponse).toEqual(badRequest(new InvalidParamError('phones').serializeErrors()))
+  })
+
+  it('Should return 404 error if update method returns null', async () => {
+    jest
+      .spyOn(contactStub, 'update')
+      .mockReturnValueOnce(new Promise((resolve) => { resolve(null) }))
+
+    const expectedResponse = await sut.handle(updateContactDto)
+    expect(expectedResponse).toEqual(notFound(new NotFoundError().serializeErrors()))
   })
 
   it('Should return 200 status code and contact updated on succeeds', async () => {
