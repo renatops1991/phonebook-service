@@ -5,8 +5,7 @@ import { IContact } from '@/domain/protocols/contact'
 import { badRequest, notFound, serverError, success } from '../helpers/http-protocols-helper'
 import { IValidation } from '../protocols/validation'
 import { NotFoundError } from '../errors/not-found-error'
-
-export interface UpdateContactController extends UpdateContactDto { email: string }
+import { MissingMandatoryParamError } from '../errors/missing-mandatory-param-error'
 
 export class UpdateContact implements IController {
   constructor (
@@ -14,11 +13,15 @@ export class UpdateContact implements IController {
     private readonly validation: IValidation
   ) { }
 
-  async handle (updateContactDto: UpdateContactController): Promise<HttpResponseType> {
+  async handle (updateContactDto: UpdateContactDto): Promise<HttpResponseType> {
     try {
       const hasError = this.validation.validate(updateContactDto)
       if (hasError) {
         return badRequest(hasError)
+      }
+
+      if (!updateContactDto.email) {
+        return badRequest(new MissingMandatoryParamError('email').serializeErrors())
       }
 
       const contactUpdated = await this.contact.update(updateContactDto.email, updateContactDto)
