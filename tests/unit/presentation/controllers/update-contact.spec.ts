@@ -1,5 +1,6 @@
 import { UpdateContact } from '@/presentation/controllers/update-contact'
 import { InvalidParamError } from '@/presentation/errors/invalid-param-error'
+import { MissingMandatoryParamError } from '@/presentation/errors/missing-mandatory-param-error'
 import { NotFoundError } from '@/presentation/errors/not-found-error'
 import { ServerError } from '@/presentation/errors/server-error'
 import { badRequest, notFound, serverError, success } from '@/presentation/helpers/http-protocols-helper'
@@ -39,6 +40,14 @@ describe('updateContactController', () => {
 
     const expectedResponse = await sut.handle(updateContactDto)
     expect(expectedResponse).toEqual(badRequest(new InvalidParamError('phones').serializeErrors()))
+  })
+
+  it('Should return 400 error email is not provided by parameter', async () => {
+    jest.spyOn(contactStub, 'update')
+
+    delete updateContactDto.email
+    const expectedResponse = await sut.handle(updateContactDto)
+    expect(expectedResponse).toEqual(badRequest(new MissingMandatoryParamError('email').serializeErrors()))
   })
 
   it('Should return 404 error if update method returns null', async () => {
