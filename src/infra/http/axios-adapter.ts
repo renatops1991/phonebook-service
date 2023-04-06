@@ -1,6 +1,6 @@
 import { IHttpRequest } from '@/data/protocols/http-request'
 import { HttpConfigType, HttpHeaderType, HttpResponseType } from '@/data/types/http-types'
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
 export class AxiosAdapter implements IHttpRequest {
   private client: AxiosInstance
@@ -10,14 +10,9 @@ export class AxiosAdapter implements IHttpRequest {
   ) { }
 
   async create (url: string, body?: any, headers?: HttpHeaderType | undefined): Promise<HttpResponseType> {
-    await this.getConnection().post(url, body, headers)
+    const response = await this.getConnection().post(url, body, headers)
 
-    return {
-      status: 200,
-      headers: {
-        api: 'foo'
-      }
-    }
+    return this.makeResponse(response)
   }
 
   read: (url: string, body?: any, headers?: HttpHeaderType | undefined) => Promise<HttpResponseType>
@@ -30,5 +25,13 @@ export class AxiosAdapter implements IHttpRequest {
       this.client = axios.create(this.axiosConfig)
     }
     return this.client
+  }
+
+  private makeResponse (axiosResponse: AxiosResponse): HttpResponseType {
+    return {
+      status: axiosResponse.status,
+      headers: axiosResponse.headers,
+      data: axiosResponse.data
+    }
   }
 }
