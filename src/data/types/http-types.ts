@@ -5,3 +5,11 @@ export type HttpResponseType<T = any> = {
 }
 
 export type HttpHeaderType = Record<string, string | number | boolean>
+
+export type HttpConfigType = {
+  baseURL: string
+  serviceName?: string
+  headers?: HttpHeaderType
+  timeout?: number
+  ApiKey?: string
+}
