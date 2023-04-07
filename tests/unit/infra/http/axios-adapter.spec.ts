@@ -95,5 +95,11 @@ describe('AxiosAdapter', () => {
       const expectedResponse = await sut.delete(url, { apiKey: 'foo' })
       expect(expectedResponse).toEqual(Object.assign(fixtureHttpAxiosResponse(200), { data: {} }))
     })
+
+    it('Should throw error if delete method throw exception error', async () => {
+      jest.spyOn(httpAxiosStub, 'delete').mockImplementationOnce(() => { throw new Error() })
+      const expectedResponse = sut.delete(url, { apiKey: 'foo' })
+      await expect(expectedResponse).rejects.toThrow()
+    })
   })
 })
