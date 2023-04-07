@@ -6,7 +6,8 @@ jest.mock('axios', () => {
   return {
     create: jest.fn(() => httpAxiosRequestStub),
     read: jest.fn(() => httpAxiosRequestStub),
-    update: jest.fn(() => httpAxiosRequestStub)
+    update: jest.fn(() => httpAxiosRequestStub),
+    delete: jest.fn(() => httpAxiosRequestStub)
   }
 })
 const config = {
@@ -78,6 +79,15 @@ describe('AxiosAdapter', () => {
       jest.spyOn(httpAxiosStub, 'put').mockImplementationOnce(() => { throw new Error() })
       const expectedResponse = sut.update(url, body, { apiKey: 'foo' })
       await expect(expectedResponse).rejects.toThrow()
+    })
+  })
+
+  describe('Delete', () => {
+    const url = '/v1/order/delete/email'
+    it('Should call delete method of the axios client with corrects values', async () => {
+      const deleteSpy = jest.spyOn(httpAxiosStub, 'delete')
+      await sut.delete(url, { apiKey: 'foo' })
+      expect(deleteSpy).toHaveBeenCalledWith(url, { apiKey: 'foo' })
     })
   })
 })

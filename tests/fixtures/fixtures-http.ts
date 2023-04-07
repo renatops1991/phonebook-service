@@ -35,5 +35,13 @@ export const httpAxiosRequestStub = {
       'content-type': 'application/json'
     },
     data: { name: 'foo' }
+  }),
+  delete: jest.fn().mockReturnValue({
+    status: 200,
+    headers: {
+      api: 'foo',
+      'content-type': 'application/json'
+    },
+    data: {}
   })
 }
