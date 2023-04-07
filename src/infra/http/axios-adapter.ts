@@ -11,7 +11,6 @@ export class AxiosAdapter implements IHttpRequest {
 
   async create (url: string, body?: any, headers?: HttpHeaderType | undefined): Promise<HttpResponseType> {
     const response = await this.getConnection().post(url, body, headers)
-
     return this.makeResponse(response)
   }
 

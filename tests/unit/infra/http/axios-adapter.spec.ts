@@ -28,5 +28,11 @@ describe('AxiosAdapter', () => {
       const expectedResponse = await sut.create(url, body, { apiKey: 'foo' })
       expect(expectedResponse).toEqual(fixtureHttpAxiosResponse(200))
     })
+
+    it('Should throw error if post method throw exception error', async () => {
+      jest.spyOn(httpAxiosStub, 'post').mockImplementationOnce(() => { throw new Error() })
+      const expectedResponse = sut.create(url, body, { apiKey: 'foo' })
+      await expect(expectedResponse).rejects.toThrow()
+    })
   })
 })
