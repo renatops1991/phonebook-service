@@ -44,5 +44,11 @@ describe('AxiosAdapter', () => {
       await sut.read(url, { apiKey: 'foo' })
       expect(readSpy).toHaveBeenCalledWith(url, { apiKey: 'foo' })
     })
+
+    it('Should return response data correctly if get method on succeeds', async () => {
+      jest.spyOn(httpAxiosStub, 'get')
+      const expectedResponse = await sut.read(url, { apiKey: 'foo' })
+      expect(expectedResponse).toEqual(fixtureHttpAxiosResponse(200))
+    })
   })
 })
