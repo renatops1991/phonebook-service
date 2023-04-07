@@ -5,5 +5,4 @@ export interface IHttpRequest<T = any> {
   read: (url: string, headers?: HttpHeaderType) => Promise<HttpResponseType>
   update: (url: string, body?: T, headers?: HttpHeaderType) => Promise<HttpResponseType>
   delete: (url: string, body?: T, headers?: HttpHeaderType) => Promise<HttpResponseType>
-  patch: (url: string, body?: T, headers?: HttpHeaderType) => Promise<HttpResponseType>
 }

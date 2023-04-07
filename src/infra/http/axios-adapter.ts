@@ -25,7 +25,6 @@ export class AxiosAdapter implements IHttpRequest {
   }
 
   delete: (url: string, body?: any, headers?: HttpHeaderType | undefined) => Promise<HttpResponseType>
-  patch: (url: string, body?: any, headers?: HttpHeaderType | undefined) => Promise<HttpResponseType>
 
   private getConnection (): AxiosInstance {
     if (!this.client) {
