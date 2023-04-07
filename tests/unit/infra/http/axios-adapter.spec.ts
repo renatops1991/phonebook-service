@@ -50,5 +50,11 @@ describe('AxiosAdapter', () => {
       const expectedResponse = await sut.read(url, { apiKey: 'foo' })
       expect(expectedResponse).toEqual(fixtureHttpAxiosResponse(200))
     })
+
+    it('Should throw error if get method throw exception error', async () => {
+      jest.spyOn(httpAxiosStub, 'get').mockImplementationOnce(() => { throw new Error() })
+      const expectedResponse = sut.read(url, { apiKey: 'foo' })
+      await expect(expectedResponse).rejects.toThrow()
+    })
   })
 })
