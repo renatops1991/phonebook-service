@@ -19,7 +19,11 @@ export class AxiosAdapter implements IHttpRequest {
     return this.makeResponse(response)
   }
 
-  update: (url: string, body?: any, headers?: HttpHeaderType | undefined) => Promise<HttpResponseType>
+  async update (url: string, body?: any, headers?: HttpHeaderType | undefined): Promise<HttpResponseType> {
+    const response = await this.getConnection().put(url, body, headers)
+    return this.makeResponse(response)
+  }
+
   delete: (url: string, body?: any, headers?: HttpHeaderType | undefined) => Promise<HttpResponseType>
   patch: (url: string, body?: any, headers?: HttpHeaderType | undefined) => Promise<HttpResponseType>
 
