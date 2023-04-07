@@ -15,12 +15,8 @@ export class AxiosAdapter implements IHttpRequest {
   }
 
   async read (url: string, headers?: HttpHeaderType | undefined): Promise<HttpResponseType> {
-    await this.getConnection().get(url, headers)
-
-    return {
-      status: 200,
-      headers: ''
-    }
+    const response = await this.getConnection().get(url, headers)
+    return this.makeResponse(response)
   }
 
   update: (url: string, body?: any, headers?: HttpHeaderType | undefined) => Promise<HttpResponseType>
