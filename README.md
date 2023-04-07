@@ -32,5 +32,8 @@ npm run test:unit
 npm run test:e2e
 ```
 
+## Architecture
+![phone book architecture](./phonebook-architecture.jpg)
+
 ## Documentation
 After running the application, you can access the documentation, through the url `http://localhost:3001/docs`
