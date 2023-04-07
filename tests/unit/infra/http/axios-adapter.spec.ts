@@ -89,5 +89,11 @@ describe('AxiosAdapter', () => {
       await sut.delete(url, { apiKey: 'foo' })
       expect(deleteSpy).toHaveBeenCalledWith(url, { apiKey: 'foo' })
     })
+
+    it('Should return response data correctly if delete method on succeeds', async () => {
+      jest.spyOn(httpAxiosStub, 'delete')
+      const expectedResponse = await sut.delete(url, { apiKey: 'foo' })
+      expect(expectedResponse).toEqual(Object.assign(fixtureHttpAxiosResponse(200), { data: {} }))
+    })
   })
 })

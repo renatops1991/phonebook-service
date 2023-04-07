@@ -25,12 +25,8 @@ export class AxiosAdapter implements IHttpRequest {
   }
 
   async delete (url: string, headers?: HttpHeaderType | undefined): Promise<HttpResponseType> {
-    await this.getConnection().delete(url, headers)
-
-    return {
-      status: 200,
-      headers: ''
-    }
+    const response = await this.getConnection().delete(url, headers)
+    return this.makeResponse(response)
   }
 
   private getConnection (): AxiosInstance {
