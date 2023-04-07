@@ -4,7 +4,8 @@ import axios from 'axios'
 
 jest.mock('axios', () => {
   return {
-    create: jest.fn(() => httpAxiosRequestStub)
+    create: jest.fn(() => httpAxiosRequestStub),
+    read: jest.fn(() => httpAxiosRequestStub)
   }
 })
 const config = {
@@ -33,6 +34,15 @@ describe('AxiosAdapter', () => {
       jest.spyOn(httpAxiosStub, 'post').mockImplementationOnce(() => { throw new Error() })
       const expectedResponse = sut.create(url, body, { apiKey: 'foo' })
       await expect(expectedResponse).rejects.toThrow()
+    })
+  })
+
+  describe('Read', () => {
+    const url = '/v1/order/read/email'
+    it('Should call get method of the axios client with corrects values', async () => {
+      const readSpy = jest.spyOn(httpAxiosStub, 'get')
+      await sut.read(url, { apiKey: 'foo' })
+      expect(readSpy).toHaveBeenCalledWith(url, { apiKey: 'foo' })
     })
   })
 })
