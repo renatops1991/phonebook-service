@@ -27,5 +27,13 @@ export const httpAxiosRequestStub = {
       'content-type': 'application/json'
     },
     data: { name: 'foo' }
+  }),
+  put: jest.fn().mockReturnValue({
+    status: 200,
+    headers: {
+      api: 'foo',
+      'content-type': 'application/json'
+    },
+    data: { name: 'foo' }
   })
 }

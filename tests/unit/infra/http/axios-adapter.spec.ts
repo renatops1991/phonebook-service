@@ -5,7 +5,8 @@ import axios from 'axios'
 jest.mock('axios', () => {
   return {
     create: jest.fn(() => httpAxiosRequestStub),
-    read: jest.fn(() => httpAxiosRequestStub)
+    read: jest.fn(() => httpAxiosRequestStub),
+    update: jest.fn(() => httpAxiosRequestStub)
   }
 })
 const config = {
@@ -55,6 +56,22 @@ describe('AxiosAdapter', () => {
       jest.spyOn(httpAxiosStub, 'get').mockImplementationOnce(() => { throw new Error() })
       const expectedResponse = sut.read(url, { apiKey: 'foo' })
       await expect(expectedResponse).rejects.toThrow()
+    })
+  })
+
+  describe('Update', () => {
+    const url = '/v1/order/update/email'
+    const body = { name: 'foo' }
+    it('Should call put method of the axios client with corrects values', async () => {
+      const updateSpy = jest.spyOn(httpAxiosStub, 'put')
+      await sut.update(url, body, { apiKey: 'foo' })
+      expect(updateSpy).toHaveBeenCalledWith(url, body, { apiKey: 'foo' })
+    })
+
+    it('Should return response data correctly if put method on succeeds', async () => {
+      jest.spyOn(httpAxiosStub, 'put')
+      const expectedResponse = await sut.create(url, body, { apiKey: 'foo' })
+      expect(expectedResponse).toEqual(fixtureHttpAxiosResponse(200))
     })
   })
 })
