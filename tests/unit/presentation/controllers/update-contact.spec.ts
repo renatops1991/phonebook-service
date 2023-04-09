@@ -4,9 +4,9 @@ import { MissingMandatoryParamError } from '@/presentation/errors/missing-mandat
 import { NotFoundError } from '@/presentation/errors/not-found-error'
 import { ServerError } from '@/presentation/errors/server-error'
 import { badRequest, notFound, serverError, success } from '@/presentation/helpers/http-protocols-helper'
-import { fixtureUpdateContact, fixtureUpdateContactOutput } from '@/tests/fixtures/fixturesContact'
-import { contactUseCaseStub } from '@/tests/mocks/mock-contact'
-import { mockValidation } from '@/tests/mocks/mock-validate'
+import { fixtureUpdateContact, fixtureUpdateContactOutput } from '@/tests/unit/fixtures/fixturesContact'
+import { contactUseCaseStub } from '@/tests/unit/mocks/mock-contact'
+import { mockValidation } from '@/tests/unit/mocks/mock-validate'
 
 const validationStub = mockValidation()
 const contactStub = contactUseCaseStub()

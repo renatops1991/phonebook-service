@@ -1,6 +1,6 @@
 import { ContactBuilder } from '@/data/builders/contact-builder'
 import { Contact } from '@/domain/entities/contact'
-import { fixtureContact, fixtureUpdateContact } from '@/tests/fixtures/fixturesContact'
+import { fixtureContact, fixtureUpdateContact } from '@/tests/unit/fixtures/fixturesContact'
 
 describe('ContactBuilder', () => {
   describe('buildContact Method', () => {

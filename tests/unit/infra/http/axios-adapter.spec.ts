@@ -1,5 +1,5 @@
 import { AxiosAdapter } from '@/infra/http/axios-adapter'
-import { fixtureHttpAxiosResponse, httpAxiosRequestStub } from '@/tests/fixtures/fixtures-http'
+import { fixtureHttpAxiosResponse, httpAxiosRequestStub } from '@/tests/unit/fixtures/fixtures-http'
 import axios from 'axios'
 
 jest.mock('axios', () => {

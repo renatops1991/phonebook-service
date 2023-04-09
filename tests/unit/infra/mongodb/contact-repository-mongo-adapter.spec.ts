@@ -1,6 +1,6 @@
 import { MongoHelper } from '@/infra/mongodb/mongo-helper'
 import { ContactRepositoryMongoAdapter } from '@/infra/mongodb/contact-repository-mongo-adapter'
-import { fixtureContact, fixtureUpdateContact } from '@/tests/fixtures/fixturesContact'
+import { fixtureContact, fixtureUpdateContact } from '@/tests/unit/fixtures/fixturesContact'
 import { Collection } from 'mongodb'
 import dotenv from 'dotenv'
 

@@ -1,5 +1,5 @@
 import { InvalidParamError } from '@/presentation/errors/invalid-param-error'
-import { mockValidator } from '@/tests/mocks/mock-validate'
+import { mockValidator } from '@/tests/unit/mocks/mock-validate'
 import { PhoneNumberValidate } from '@/validation/phone-number-validate'
 
 const validateStub = mockValidator()

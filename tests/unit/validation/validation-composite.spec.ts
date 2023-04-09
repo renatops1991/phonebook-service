@@ -1,5 +1,5 @@
 import { ValidationComposite } from '@/validation/validation-composite'
-import { mockValidation } from '@/tests/mocks/mock-validate'
+import { mockValidation } from '@/tests/unit/mocks/mock-validate'
 import { MissingMandatoryParamError } from '@/presentation/errors/missing-mandatory-param-error'
 
 const validationStub = [mockValidation(), mockValidation()]

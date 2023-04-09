@@ -2,9 +2,9 @@ import { CreateContact } from '@/presentation/controllers/create-contact'
 import { EmailInUseError } from '@/presentation/errors/email-in-use-error'
 import { ServerError } from '@/presentation/errors/server-error'
 import { badRequest, forbidden, serverError } from '@/presentation/helpers/http-protocols-helper'
-import { fixtureContact, fixtureContactOutput } from '@/tests/fixtures/fixturesContact'
-import { contactUseCaseStub } from '@/tests/mocks/mock-contact'
-import { mockValidation } from '@/tests/mocks/mock-validate'
+import { fixtureContact, fixtureContactOutput } from '@/tests/unit/fixtures/fixturesContact'
+import { contactUseCaseStub } from '@/tests/unit/mocks/mock-contact'
+import { mockValidation } from '@/tests/unit/mocks/mock-validate'
 
 const validationStub = mockValidation()
 const contactStub = contactUseCaseStub()

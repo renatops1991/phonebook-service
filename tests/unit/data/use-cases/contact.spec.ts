@@ -5,8 +5,8 @@ import {
   fixtureFilterContact,
   fixtureUpdateContact,
   fixtureUpdateContactOutput
-} from '@/tests/fixtures/fixturesContact'
-import { mockContactBuilderStub, mockContactRepositoryStub } from '@/tests/mocks/mock-contact'
+} from '@/tests/unit/fixtures/fixturesContact'
+import { mockContactBuilderStub, mockContactRepositoryStub } from '@/tests/unit/mocks/mock-contact'
 
 const contactRepositoryStub = mockContactRepositoryStub()
 const contactBuilderStub = mockContactBuilderStub()

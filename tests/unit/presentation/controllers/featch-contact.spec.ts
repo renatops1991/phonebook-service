@@ -3,9 +3,9 @@ import { InvalidFilterError } from '@/presentation/errors/invalid-filter-error'
 import { NotFoundError } from '@/presentation/errors/not-found-error'
 import { ServerError } from '@/presentation/errors/server-error'
 import { badRequest, notFound, serverError } from '@/presentation/helpers/http-protocols-helper'
-import { fixtureContactOutput, fixtureFilterContact } from '@/tests/fixtures/fixturesContact'
-import { contactUseCaseStub } from '@/tests/mocks/mock-contact'
-import { mockValidation } from '@/tests/mocks/mock-validate'
+import { fixtureContactOutput, fixtureFilterContact } from '@/tests/unit/fixtures/fixturesContact'
+import { contactUseCaseStub } from '@/tests/unit/mocks/mock-contact'
+import { mockValidation } from '@/tests/unit/mocks/mock-validate'
 
 const validationStub = mockValidation()
 const contactStub = contactUseCaseStub()
