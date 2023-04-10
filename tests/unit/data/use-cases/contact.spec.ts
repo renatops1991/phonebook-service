@@ -6,11 +6,15 @@ import {
   fixtureUpdateContact,
   fixtureUpdateContactOutput
 } from '@/tests/unit/fixtures/fixturesContact'
-import { mockContactBuilderStub, mockContactRepositoryStub } from '@/tests/unit/mocks/mock-contact'
+import { mockHttpRequest, mockContactBuilderStub, mockContactRepositoryStub } from '@/tests/unit/mocks/mock-contact'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const contactRepositoryStub = mockContactRepositoryStub()
 const contactBuilderStub = mockContactBuilderStub()
-const sut = new Contact(contactRepositoryStub, contactBuilderStub)
+const httpRequestStub = mockHttpRequest()
+const sut = new Contact(contactRepositoryStub, contactBuilderStub, httpRequestStub)
 
 describe('Contact UseCase', () => {
   describe('Create Method', () => {
@@ -55,6 +59,17 @@ describe('Contact UseCase', () => {
     it('Should return an contacts array', async () => {
       const expectedResponse = await sut.fetchContacts(fixtureFilterContact())
       expect(expectedResponse).toEqual([fixtureContactOutput()])
+    })
+
+    it('Should call read method of the axiosAdapter with correct values', async () => {
+      const apiKey = process.env.HG_BRASIL_KEY
+      const cityName = 'Santo André, SP'
+      const readSpy = jest
+        .spyOn(httpRequestStub, 'read')
+      jest
+        .spyOn(contactRepositoryStub, 'fetchContacts')
+      await sut.fetchContacts(fixtureFilterContact())
+      expect(readSpy).toHaveBeenCalledWith(`https://api.hgbrasil.com/weather?key=${apiKey}&city_name=${cityName}`)
     })
   })
 
