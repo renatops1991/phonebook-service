@@ -17,7 +17,29 @@ export const fixtureContact = (): CreateContactDto => ({
   phones: ['1194657882', '11457895642']
 })
 
-export const fixtureContactOutput = (): ContactOutputDto => Object.assign({ ...fixtureContact(), id: 'foo' })
+export const fixtureContactOutput = (): ContactOutputDto => Object.assign(
+  {
+    ...fixtureContact(),
+    id: 'foo'
+  }
+)
+
+export const fixtureContactWithWeatherOutput = (): ContactOutputDto => Object.assign(
+  {
+    ...fixtureContact(),
+    id: 'foo',
+    description: 'Ofereça um chocolate quente ao seu contato...',
+    weather: {
+      temperature: 15,
+      date: new Date('2023-01-01T00:00:00'),
+      currently: 'noite',
+      description: 'Tempo nublado',
+      humidity: 25,
+      cloudiness: 25,
+      rain: 0
+    }
+  }
+)
 
 export const fixtureFilterContact = (): FilterContactDto => ({
   name: 'John foo bar',

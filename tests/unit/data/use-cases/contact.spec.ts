@@ -2,11 +2,13 @@ import { Contact } from '@/data/use-cases/contact'
 import {
   fixtureContact,
   fixtureContactOutput,
+  fixtureContactWithWeatherOutput,
   fixtureFilterContact,
   fixtureUpdateContact,
   fixtureUpdateContactOutput
 } from '@/tests/unit/fixtures/fixturesContact'
 import { mockHttpRequest, mockContactBuilderStub, mockContactRepositoryStub } from '@/tests/unit/mocks/mock-contact'
+import MockDate from 'mockdate'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -17,6 +19,12 @@ const httpRequestStub = mockHttpRequest()
 const sut = new Contact(contactRepositoryStub, contactBuilderStub, httpRequestStub)
 
 describe('Contact UseCase', () => {
+  beforeAll(async () => {
+    MockDate.set(new Date())
+  })
+  afterAll(() => {
+    MockDate.reset()
+  })
   describe('Create Method', () => {
     it('Should call buildContact method of ContactBuilder class with correct values', async () => {
       const buildContactSpy = jest.spyOn(contactBuilderStub, 'buildContact')
@@ -56,19 +64,22 @@ describe('Contact UseCase', () => {
       await sut.fetchContacts(fixtureFilterContact())
       expect(fetchContactsSpy).toHaveBeenCalledWith(fixtureFilterContact())
     })
-    it('Should return an contacts array', async () => {
-      const expectedResponse = await sut.fetchContacts(fixtureFilterContact())
-      expect(expectedResponse).toEqual([fixtureContactOutput()])
-    })
 
     it('Should call read method of the axiosAdapter with correct values', async () => {
-      const cityName = 'Santo Andre,SP'
+      const cityName = 'foo,bar'
       const readSpy = jest
         .spyOn(httpRequestStub, 'read')
       jest
         .spyOn(contactRepositoryStub, 'fetchContacts')
       await sut.fetchContacts(fixtureFilterContact())
       expect(readSpy).toHaveBeenCalledWith(`&city_name=${cityName}`)
+    })
+
+    it('Should return an contacts array with weather property', async () => {
+      jest
+        .spyOn(httpRequestStub, 'read')
+      const expectedResponse = await sut.fetchContacts(fixtureFilterContact())
+      expect(expectedResponse).toStrictEqual([fixtureContactWithWeatherOutput()])
     })
   })
 

@@ -85,19 +85,22 @@ export const contactUseCaseStub = (): IContact => {
 export const mockHttpRequest = (): IHttpRequest => {
   class AxiosAdapterStub implements IHttpRequest {
     create: (url: string, body?: any, headers?: HttpHeaderType) => Promise<HttpResponseType>
+
     async read (url: string, headers?: HttpHeaderType): Promise<HttpResponseType> {
       return await new Promise(resolve => {
         resolve({
           status: 200,
           headers: '',
           data: {
-            temperature: 15,
-            date: '2023-01-01T00:00:00',
-            currently: 'noite',
-            description: 'Tempo nublado',
-            humidity: 25,
-            cloudiness: 25,
-            rain: 0
+            results: {
+              temp: 15,
+              date: new Date('2023-01-01T00:00:00'),
+              currently: 'noite',
+              description: 'Tempo nublado',
+              humidity: 25,
+              cloudiness: 25,
+              rain: 0
+            }
           }
         })
       })
