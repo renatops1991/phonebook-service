@@ -62,6 +62,9 @@ export class Contact implements IContact {
   }
 
   private makeTemperatureMessage (temperature: number, condition: string): string {
+    if (temperature <= 18) {
+      return 'Ofereça um chocolate quente ao seu contato...'
+    }
     if (temperature >= 30 && condition === '32') {
       return 'Convide seu contato para ir à praia com esse calor!'
     }
@@ -75,6 +78,6 @@ export class Contact implements IContact {
       return 'Convide seu contato para ver um filme'
     }
 
-    return 'Ofereça um chocolate quente ao seu contato...'
+    return 'Convide seu contato para fazer uma caminhada'
   }
 }
