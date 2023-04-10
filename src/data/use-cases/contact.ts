@@ -4,11 +4,12 @@ import { ContactOutputDto } from '@/main/dtos/contact-output.dto'
 import { CreateContactDto } from '@/main/dtos/create-contact.dto'
 import { IContactBuilder } from '../protocols/contact-builder'
 import { IContactRepository } from '../protocols/contact-repository'
-
+import { IHttpRequest } from '../protocols/http-request'
 export class Contact implements IContact {
   constructor (
     private readonly contactRepository: IContactRepository,
-    private readonly contactBuilder: IContactBuilder
+    private readonly contactBuilder: IContactBuilder,
+    private readonly httpRequest: IHttpRequest
   ) { }
 
   async create (contactDto: CreateContactDto): Promise<ContactOutputDto | null> {
@@ -22,6 +23,7 @@ export class Contact implements IContact {
   }
 
   async fetchContacts (filterContactDto: FilterContactDto): Promise<ContactOutputDto[]> {
+    await this.httpRequest.read(`https://api.hgbrasil.com/weather?key=${process.env.HG_BRASIL_KEY}&city_name=Santo André, SP`)
     return await this.contactRepository.fetchContacts(filterContactDto)
   }
 
