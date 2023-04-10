@@ -7,9 +7,18 @@ import { Router } from 'express'
 import { makeCreateValidationFactory, makeFetchValidationFactory, makeUpdateValidationFactory } from '../factories/validation-factory'
 import { FetchContact } from '@/presentation/controllers/fetch-contact'
 import { UpdateContact } from '@/presentation/controllers/update-contact'
+import { AxiosAdapter } from '@/infra/http/axios-adapter'
+import { HttpConfigType } from '@/data/types/http-types'
 
 export default (router: Router): void => {
-  const contact = new Contact(new ContactRepositoryMongoAdapter(), new ContactBuilder())
+  const axiosConfig: HttpConfigType = {
+    baseURL: `${process.env.HG_BRASIL_URI}?key=${process.env.HG_BRASIL_KEY}`
+  }
+  const contact = new Contact(
+    new ContactRepositoryMongoAdapter(),
+    new ContactBuilder(),
+    new AxiosAdapter(axiosConfig)
+  )
 
   router.post('/contact', expressAdapter(new CreateContact(contact, makeCreateValidationFactory())))
   router.get('/contacts', expressAdapter(new FetchContact(contact, makeFetchValidationFactory())))

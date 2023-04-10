@@ -23,8 +23,9 @@ export class Contact implements IContact {
   }
 
   async fetchContacts (filterContactDto: FilterContactDto): Promise<ContactOutputDto[]> {
-    await this.httpRequest.read(`https://api.hgbrasil.com/weather?key=${process.env.HG_BRASIL_KEY}&city_name=Santo André, SP`)
-    return await this.contactRepository.fetchContacts(filterContactDto)
+    const contacts = await this.contactRepository.fetchContacts(filterContactDto)
+    await this.httpRequest.read('&city_name=Santo Andre,SP')
+    return contacts
   }
 
   async update (email: string, updateContactDto: UpdateContactDto): Promise<ContactOutputDto | null> {
