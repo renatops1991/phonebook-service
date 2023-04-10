@@ -62,14 +62,13 @@ describe('Contact UseCase', () => {
     })
 
     it('Should call read method of the axiosAdapter with correct values', async () => {
-      const apiKey = process.env.HG_BRASIL_KEY
-      const cityName = 'Santo André, SP'
+      const cityName = 'Santo Andre,SP'
       const readSpy = jest
         .spyOn(httpRequestStub, 'read')
       jest
         .spyOn(contactRepositoryStub, 'fetchContacts')
       await sut.fetchContacts(fixtureFilterContact())
-      expect(readSpy).toHaveBeenCalledWith(`https://api.hgbrasil.com/weather?key=${apiKey}&city_name=${cityName}`)
+      expect(readSpy).toHaveBeenCalledWith(`&city_name=${cityName}`)
     })
   })
 
