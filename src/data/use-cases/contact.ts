@@ -5,6 +5,7 @@ import { CreateContactDto } from '@/main/dtos/create-contact.dto'
 import { IContactBuilder } from '../protocols/contact-builder'
 import { IContactRepository } from '../protocols/contact-repository'
 import { IHttpRequest } from '../protocols/http-request'
+import * as utils from '@/main/utils'
 export class Contact implements IContact {
   constructor (
     private readonly contactRepository: IContactRepository,
@@ -28,12 +29,12 @@ export class Contact implements IContact {
 
     for (const contact of contacts) {
       const weather = await this.httpRequest.read(`&city_name=${contact.address.city},${contact.address.state}`)
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      const { temp, date, currently, description, humidity, cloudiness, rain, condition_code } = weather.data.results
+
+      const { temp, date, currently, description, humidity, cloudiness, rain } = weather.data.results
 
       contactsWithWeather.push({
         ...contact,
-        description: this.makeTemperatureMessage(temp, condition_code),
+        description: utils.makeDescriptionWeatherByTemperature(temp, weather.data.results.condition_code),
         weather: {
           temperature: temp ?? null,
           date: new Date(date) ?? new Date(),
@@ -59,25 +60,5 @@ export class Contact implements IContact {
     const buildUpdateContact = this.contactBuilder.buildUpdateContact(updateContactDto)
 
     return await this.contactRepository.update(email, buildUpdateContact)
-  }
-
-  private makeTemperatureMessage (temperature: number, condition: string): string {
-    if (temperature <= 18) {
-      return 'Ofereça um chocolate quente ao seu contato...'
-    }
-    if (temperature >= 30 && condition === '32') {
-      return 'Convide seu contato para ir à praia com esse calor!'
-    }
-    if (temperature >= 30 && condition === '45') {
-      return ' Convide seu contato para tomar um sorvete'
-    }
-    if ((temperature > 18 && temperature < 30) && condition === '32') {
-      return ' Convide seu contato para fazer alguma atividade ao livre'
-    }
-    if ((temperature > 18 && temperature < 30) && condition === '45') {
-      return 'Convide seu contato para ver um filme'
-    }
-
-    return 'Convide seu contato para fazer uma caminhada'
   }
 }
