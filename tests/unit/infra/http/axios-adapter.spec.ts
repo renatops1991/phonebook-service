@@ -1,4 +1,4 @@
-import { AxiosAdapter } from '@/infra/http/axios-adapter'
+import { AxiosAdapter } from '@/infra/axios/axios-adapter'
 import { fixtureHttpAxiosResponse, httpAxiosRequestStub } from '@/tests/unit/fixtures/fixtures-http'
 import axios from 'axios'
 

@@ -7,7 +7,7 @@ import { Router } from 'express'
 import { makeCreateValidationFactory, makeFetchValidationFactory, makeUpdateValidationFactory } from '../factories/validation-factory'
 import { FetchContact } from '@/presentation/controllers/fetch-contact'
 import { UpdateContact } from '@/presentation/controllers/update-contact'
-import { AxiosAdapter } from '@/infra/http/axios-adapter'
+import { AxiosAdapter } from '@/infra/axios/axios-adapter'
 import { HttpConfigType } from '@/data/types/http-types'
 
 export default (router: Router): void => {

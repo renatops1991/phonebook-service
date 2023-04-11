@@ -18,7 +18,7 @@ export class Contact implements IContact {
     if (hasContact) {
       return null
     }
-    const buildedContact = this.contactBuilder?.buildContact(contactDto) as CreateContactDto
+    const buildedContact = this.contactBuilder.buildContact(contactDto) as CreateContactDto
     const contact = await this.contactRepository.create(buildedContact)
     return contact
   }
@@ -34,7 +34,7 @@ export class Contact implements IContact {
 
       contactsWithWeather.push({
         ...contact,
-        description: utils.makeDescriptionWeatherByTemperature(temp, weather.data.results.condition_code),
+        description: utils.makeDescriptionWeatherByTemperature(temp, weather.data.results?.condition_code),
         weather: {
           temperature: temp ?? null,
           date: new Date(date) ?? new Date(),
