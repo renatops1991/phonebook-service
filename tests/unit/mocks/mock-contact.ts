@@ -83,7 +83,7 @@ export const contactUseCaseStub = (): IContact => {
     }
 
     async delete (email: string): Promise<void> {
-      await new Promise(resolve => resolve)
+      await Promise.resolve()
     }
   }
 
