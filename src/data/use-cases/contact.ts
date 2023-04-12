@@ -26,23 +26,24 @@ export class Contact implements IContact {
   async fetchContacts (filterContactDto: FilterContactDto): Promise<ContactOutputDto[]> {
     const contactsWithWeather: ContactOutputDto[] = []
     const contacts = await this.contactRepository.fetchContacts(filterContactDto)
+    const params = 'temp,date,currently,description,description,humidity,cloudiness,rain,condition_code'
 
     for (const contact of contacts) {
-      const weather = await this.httpRequest.read(`&city_name=${contact.address.city},${contact.address.state}`)
-
-      const { temp, date, currently, description, humidity, cloudiness, rain } = weather.data.results
+      const weather = await this.httpRequest.read(`&fields=only_results,${params}&city_name=${contact.address.city},${contact.address.state}`)
+      const temperature = weather.data.results?.temp
+      const condition = weather.data.results?.condition_code
 
       contactsWithWeather.push({
         ...contact,
-        description: utils.makeDescriptionWeatherByTemperature(temp, weather.data.results?.condition_code),
+        description: utils.makeDescriptionWeatherByTemperature(temperature, condition),
         weather: {
-          temperature: temp ?? null,
-          date: new Date(date) ?? new Date(),
-          currently: currently ?? null,
-          description: description ?? null,
-          humidity: humidity ?? null,
-          cloudiness: cloudiness ?? null,
-          rain: rain ?? null
+          temperature,
+          date: new Date(weather.data.results?.date) ?? new Date() ?? null,
+          currently: weather.data.results?.currently ?? null,
+          description: weather.data.results?.description ?? null,
+          humidity: weather.data.results?.humidity ?? null,
+          cloudiness: weather.data.results?.cloudiness ?? null,
+          rain: weather.data.results?.rain ?? null
         }
       })
     }

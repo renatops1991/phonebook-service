@@ -67,12 +67,13 @@ describe('Contact UseCase', () => {
 
     it('Should call read method of the axiosAdapter with correct values', async () => {
       const cityName = 'foo,bar'
+      const params = 'temp,date,currently,description,description,humidity,cloudiness,rain,condition_code'
       const readSpy = jest
         .spyOn(httpRequestStub, 'read')
       jest
         .spyOn(contactRepositoryStub, 'fetchContacts')
       await sut.fetchContacts(fixtureFilterContact())
-      expect(readSpy).toHaveBeenCalledWith(`&city_name=${cityName}`)
+      expect(readSpy).toHaveBeenCalledWith(`&fields=only_results,${params}&city_name=${cityName}`)
     })
 
     it('Should return an contacts array with weather property', async () => {
