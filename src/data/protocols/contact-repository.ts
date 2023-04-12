@@ -4,4 +4,5 @@ export interface IContactRepository {
   hasContact: (email: string) => Promise<boolean>
   fetchContacts: (filterContactDto: FilterContactDto) => Promise<ContactOutputDto[]>
   update: (email: string, updateContactDto: UpdateContactDto) => Promise<ContactOutputDto>
+  delete: (id: string) => Promise<void>
 }

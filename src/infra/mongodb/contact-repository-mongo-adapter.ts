@@ -2,7 +2,7 @@ import { IContactRepository } from '@/data/protocols/contact-repository'
 import { ContactOutputDto } from '@/main/dtos/contact-output.dto'
 import { CreateContactDto } from '@/main/dtos/create-contact.dto'
 import { MongoHelper } from './mongo-helper'
-import { Collection } from 'mongodb'
+import { Collection, ObjectId } from 'mongodb'
 import { FilterContactDto, UpdateContactDto } from '@/main/dtos'
 
 export class ContactRepositoryMongoAdapter implements IContactRepository {
@@ -81,6 +81,16 @@ export class ContactRepositoryMongoAdapter implements IContactRepository {
     )
 
     return MongoHelper.map(contact.value)
+  }
+
+  async delete (id: string): Promise<void> {
+    await this.fetchContactCollection().findOneAndUpdate({
+      _id: new ObjectId(id)
+    }, {
+      $set: {
+        isDeleted: true
+      }
+    })
   }
 
   private fetchContactCollection (): Collection {
