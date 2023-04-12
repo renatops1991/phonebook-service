@@ -124,9 +124,9 @@ describe('ContactRepositoryMongoAdapter', () => {
 
   describe('delete', () => {
     it('Should update contact passed isDeleted property as true', async () => {
-      const contact = await contactCollection.insertOne(fixtureContact())
-      await sut.delete(contact.insertedId.toString())
-      const expectedResponse = await contactCollection.findOne({ _id: contact.insertedId })
+      await contactCollection.insertOne(fixtureContact())
+      await sut.delete(fixtureContact().email)
+      const expectedResponse = await contactCollection.findOne({ email: fixtureContact().email })
       expect(expectedResponse?.isDeleted).toEqual(true)
     })
   })

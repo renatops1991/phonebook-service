@@ -62,7 +62,7 @@ export class Contact implements IContact {
     return await this.contactRepository.update(email, buildUpdateContact)
   }
 
-  async delete (id: string): Promise<void> {
-    await this.contactRepository.delete(id)
+  async delete (email: string): Promise<void> {
+    await this.contactRepository.delete(email)
   }
 }

@@ -46,7 +46,7 @@ export const mockContactRepositoryStub = (): IContactRepository => {
       })
     }
 
-    async delete (id: string): Promise<void> {
+    async delete (email: string): Promise<void> {
       await Promise.resolve()
     }
   }
@@ -82,7 +82,7 @@ export const contactUseCaseStub = (): IContact => {
       return await new Promise(resolve => { resolve(fixtureUpdateContactOutput()) })
     }
 
-    async delete (id: string): Promise<void> {
+    async delete (email: string): Promise<void> {
       await new Promise(resolve => resolve)
     }
   }
