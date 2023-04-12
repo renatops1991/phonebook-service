@@ -26,10 +26,9 @@ export class Contact implements IContact {
   async fetchContacts (filterContactDto: FilterContactDto): Promise<ContactOutputDto[]> {
     const contactsWithWeather: ContactOutputDto[] = []
     const contacts = await this.contactRepository.fetchContacts(filterContactDto)
-    const params = 'temp,date,currently,description,description,humidity,cloudiness,rain,condition_code'
 
     for (const contact of contacts) {
-      const weather = await this.httpRequest.read(`&fields=only_results,${params}&city_name=${contact.address.city},${contact.address.state}`)
+      const weather = await this.httpRequest.read(`?key=${process.env.HG_BRASIL_KEY}&city_name=${contact.address.city},${contact.address.state}`)
       const temperature = weather.data.results?.temp
       const condition = weather.data.results?.condition_code
 

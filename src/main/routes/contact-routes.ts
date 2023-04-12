@@ -12,7 +12,7 @@ import { HttpConfigType } from '@/data/types/http-types'
 
 export default (router: Router): void => {
   const axiosConfig: HttpConfigType = {
-    baseURL: `${process.env.HG_BRASIL_URI}?key=${process.env.HG_BRASIL_KEY}`
+    baseURL: `${process.env.HG_BRASIL_URI}`
   }
   const contact = new Contact(
     new ContactRepositoryMongoAdapter(),
