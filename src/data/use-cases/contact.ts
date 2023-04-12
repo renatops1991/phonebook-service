@@ -63,7 +63,6 @@ export class Contact implements IContact {
   }
 
   async delete (email: string): Promise<void> {
-    await this.contactRepository.hasContact(email)
     await this.contactRepository.delete(email)
   }
 }

@@ -134,12 +134,5 @@ describe('Contact UseCase', () => {
       await sut.delete(fixtureContact().email)
       expect(deleteSpy).toHaveBeenCalledWith(fixtureContact().email)
     })
-
-    it('Should call hasContact method of repository with correct value', async () => {
-      const deleteSpy = jest
-        .spyOn(contactRepositoryStub, 'hasContact')
-      await sut.delete(fixtureContact().email)
-      expect(deleteSpy).toHaveBeenCalledWith(fixtureContact().email)
-    })
   })
 })
