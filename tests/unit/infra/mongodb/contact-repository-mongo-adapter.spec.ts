@@ -121,4 +121,13 @@ describe('ContactRepositoryMongoAdapter', () => {
       expect(expectedResponse.address).toEqual(fixtureContact().address)
     })
   })
+
+  describe('delete', () => {
+    it('Should update contact passed isDeleted property as true', async () => {
+      const contact = await contactCollection.insertOne(fixtureContact())
+      await sut.delete(contact.insertedId.toString())
+      const expectedResponse = await contactCollection.findOne({ _id: contact.insertedId })
+      expect(expectedResponse?.isDeleted).toEqual(true)
+    })
+  })
 })

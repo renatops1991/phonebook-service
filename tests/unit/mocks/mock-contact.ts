@@ -45,6 +45,8 @@ export const mockContactRepositoryStub = (): IContactRepository => {
         })
       })
     }
+
+    delete: (id: string) => Promise<void>
   }
 
   return new ContactRepositoryStub()
