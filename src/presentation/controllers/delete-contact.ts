@@ -10,6 +10,7 @@ export class DeleteContact implements IController {
   ) {}
 
   async handle (email: string): Promise<HttpResponseType> {
+    this.validation.validate(email)
     await this.contact.delete(email)
     return {
       statusCode: 200
