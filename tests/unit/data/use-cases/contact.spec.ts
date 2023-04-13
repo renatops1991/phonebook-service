@@ -92,7 +92,7 @@ describe('Contact UseCase', () => {
             data: {
               results: {
                 temp: null,
-                date: new Date(),
+                date: null,
                 currently: null,
                 description: null,
                 humidity: null,
