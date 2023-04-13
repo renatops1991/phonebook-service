@@ -90,6 +90,9 @@ export class ContactRepositoryMongoAdapter implements IContactRepository {
       $set: {
         isDeleted: true
       }
+    },
+    {
+      upsert: false
     })
   }
 

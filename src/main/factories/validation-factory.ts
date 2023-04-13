@@ -41,3 +41,13 @@ export const makeUpdateValidationFactory = (): ValidationComposite => {
 
   return new ValidationComposite(validations)
 }
+
+export const makeDeleteValidationFactory = (): ValidationComposite => {
+  const validations: IValidation[] = []
+
+  validations.push(
+    new EmailValidate('email', new ValidatorAdapter())
+  )
+
+  return new ValidationComposite(validations)
+}
