@@ -2,7 +2,7 @@ import { IContact } from '@/domain/protocols/contact'
 import { IController } from '../protocols/controller'
 import { HttpResponseType } from '../types/http-response-type'
 import { IValidation } from '../protocols/validation'
-import { badRequest, serverError } from '../helpers/http-protocols-helper'
+import { badRequest, noContent, serverError } from '../helpers/http-protocols-helper'
 
 export class DeleteContact implements IController {
   constructor (
@@ -18,9 +18,7 @@ export class DeleteContact implements IController {
       }
 
       await this.contact.delete(email)
-      return {
-        statusCode: 200
-      }
+      return noContent()
     } catch (error) {
       return serverError(error)
     }
