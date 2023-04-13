@@ -3,7 +3,7 @@ import { contactUseCaseStub } from '@/tests/unit/mocks/mock-contact'
 import { mockValidation } from '@/tests/unit/mocks/mock-validate'
 import { fixtureContact } from '../../fixtures/fixturesContact'
 import { EmailInUseError } from '@/presentation/errors/email-in-use-error'
-import { badRequest, serverError } from '@/presentation/helpers/http-protocols-helper'
+import { badRequest, noContent, serverError } from '@/presentation/helpers/http-protocols-helper'
 import { ServerError } from '@/presentation/errors/server-error'
 
 const validationStub = mockValidation()
@@ -41,5 +41,11 @@ describe('DeleteContactController', () => {
     expect(expectedResponse.statusCode).toEqual(500)
     expect(expectedResponse.body.message).toEqual('Internal Server Error')
     expect(expectedResponse).toEqual(serverError(new ServerError(expectedResponse.body.stack)))
+  })
+
+  it('Should return 204 status code if delete method on succeeds', async () => {
+    const expectedResponse = await sut.handle(fixtureContact().email)
+    expect(expectedResponse.statusCode).toEqual(204)
+    expect(expectedResponse).toEqual(noContent())
   })
 })
