@@ -3,7 +3,8 @@ import { contactUseCaseStub } from '@/tests/unit/mocks/mock-contact'
 import { mockValidation } from '@/tests/unit/mocks/mock-validate'
 import { fixtureContact } from '../../fixtures/fixturesContact'
 import { EmailInUseError } from '@/presentation/errors/email-in-use-error'
-import { badRequest } from '@/presentation/helpers/http-protocols-helper'
+import { badRequest, serverError } from '@/presentation/helpers/http-protocols-helper'
+import { ServerError } from '@/presentation/errors/server-error'
 
 const validationStub = mockValidation()
 const contactStub = contactUseCaseStub()
@@ -30,5 +31,15 @@ describe('DeleteContactController', () => {
       .mockReturnValueOnce(new EmailInUseError().serializeErrors())
     const expectedResponse = await sut.handle(fixtureContact().email)
     expect(expectedResponse).toEqual(badRequest(new EmailInUseError().serializeErrors()))
+  })
+
+  it('Should return internal server error if delete method throw exception error', async () => {
+    jest
+      .spyOn(contactStub, 'delete')
+      .mockImplementationOnce(() => { throw new Error() })
+    const expectedResponse = await sut.handle(fixtureContact().email)
+    expect(expectedResponse.statusCode).toEqual(500)
+    expect(expectedResponse.body.message).toEqual('Internal Server Error')
+    expect(expectedResponse).toEqual(serverError(new ServerError(expectedResponse.body.stack)))
   })
 })
