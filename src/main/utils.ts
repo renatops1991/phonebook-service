@@ -5,9 +5,13 @@ export const getFieldsWithValidValues = (objectFields: any): Record<string, unkn
 }
 
 export const makeDescriptionWeatherByTemperature = (
-  temperature: number,
+  temperature: number | null,
   condition?: string
 ): string => {
+  if (!temperature) {
+    return 'Convide seu contato para fazer uma caminhada'
+  }
+
   if (temperature <= 18) {
     return 'Ofereça um chocolate quente ao seu contato...'
   }

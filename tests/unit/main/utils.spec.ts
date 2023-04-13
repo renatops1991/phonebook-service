@@ -23,6 +23,12 @@ describe('Utils', () => {
       expect(sut).toEqual('Convide seu contato para fazer uma caminhada')
     })
 
+    it('Should return "Convide seu contato para fazer uma caminhada" if temperature is null', async () => {
+      const temperature = null
+      const sut = utils.makeDescriptionWeatherByTemperature(temperature, undefined)
+      expect(sut).toEqual('Convide seu contato para fazer uma caminhada')
+    })
+
     it('Should return "Ofereça um chocolate quente ao seu contato..." description it temperature is equal or less than 18', async () => {
       const temperature = 18
       const sut = utils.makeDescriptionWeatherByTemperature(temperature, undefined)

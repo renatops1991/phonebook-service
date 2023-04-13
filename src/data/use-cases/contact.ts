@@ -37,7 +37,7 @@ export class Contact implements IContact {
         description: utils.makeDescriptionWeatherByTemperature(temperature, condition),
         weather: {
           temperature: temperature ?? null,
-          date: new Date(weather.data.results?.date) ?? new Date() ?? null,
+          date: new Date(weather.data.results?.date) ?? new Date(),
           currently: weather.data.results?.currently ?? null,
           description: weather.data.results?.description ?? null,
           humidity: weather.data.results?.humidity ?? null,
