@@ -81,6 +81,46 @@ describe('Contact UseCase', () => {
       const expectedResponse = await sut.fetchContacts(fixtureFilterContact())
       expect(expectedResponse).toStrictEqual([fixtureContactWithWeatherOutput()])
     })
+
+    it('Should return a contact array with weather property null if unable to fetch location data', async () => {
+      const fixtureContactWithWeather = Object.assign(fixtureContactWithWeatherOutput(), {
+        description: 'Convide seu contato para fazer uma caminhada',
+        weather: {
+          temperature: null,
+          date: new Date(),
+          currently: null,
+          description: null,
+          humidity: null,
+          cloudiness: null,
+          rain: null
+        }
+      })
+      jest
+        .spyOn(httpRequestStub, 'read')
+        .mockReturnValueOnce(new Promise(resolve => {
+          resolve(
+            {
+              status: 200,
+              headers: '',
+              data: {
+                results: {
+                  temperature: null,
+                  date: new Date(),
+                  currently: null,
+                  description: null,
+                  humidity: null,
+                  cloudiness: null,
+                  rain: null
+                }
+              }
+            }
+          )
+        }))
+
+      const expectedResponse = await sut.fetchContacts(fixtureFilterContact())
+
+      expect(expectedResponse).toStrictEqual([fixtureContactWithWeather])
+    })
   })
 
   describe('Update method', () => {
