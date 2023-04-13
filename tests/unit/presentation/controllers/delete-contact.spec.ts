@@ -14,4 +14,11 @@ describe('DeleteContactController', () => {
     await sut.handle(fixtureContact().email)
     expect(deleteSpy).toHaveBeenCalledWith(fixtureContact().email)
   })
+
+  it('Should call validate method of the validation composite with correct value', async () => {
+    const validateSpy = jest
+      .spyOn(validationStub, 'validate')
+    await sut.handle(fixtureContact().email)
+    expect(validateSpy).toHaveBeenCalledWith(fixtureContact().email)
+  })
 })
