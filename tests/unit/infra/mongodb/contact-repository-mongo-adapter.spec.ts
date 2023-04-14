@@ -47,9 +47,10 @@ describe('ContactRepositoryMongoAdapter', () => {
     const firstContact = fixtureContact()
     const secondContact = ({ ...fixtureContact(), name: 'xis', email: 'bar@example.com', address: { street: 'xis', postcode: '09201245' } })
     const thirstContact = ({ ...fixtureContact(), name: 'bar', email: 'xis@example.com', phones: ['11946578852'] })
+    const fourthContact = ({ ...fixtureContact(), name: 'bar', email: 'xis@example.com', phones: ['11946578852'], isDeleted: true })
 
     const insertContacts = async (): Promise<any> => {
-      return (await contactCollection.insertMany([firstContact, secondContact, thirstContact])).insertedIds
+      return (await contactCollection.insertMany([firstContact, secondContact, thirstContact, fourthContact])).insertedIds
     }
 
     const contact = async (id: any): Promise<any> => {
@@ -57,6 +58,15 @@ describe('ContactRepositoryMongoAdapter', () => {
       return MongoHelper.map(contact)
     }
     it('Should return all contacts correctly', async () => {
+      const insertContact = await insertContacts()
+      const firstFetchContact = await contact(insertContact[0])
+      const secondFetchContact = await contact(insertContact[1])
+      const thirstFetchContact = await contact(insertContact[2])
+      const expectResponse = await sut.fetchContacts({})
+      expect(expectResponse).toEqual([firstFetchContact, secondFetchContact, thirstFetchContact])
+    })
+
+    it('Should return all contact correctly if isDeleted property is different true', async () => {
       const insertContact = await insertContacts()
       const firstFetchContact = await contact(insertContact[0])
       const secondFetchContact = await contact(insertContact[1])

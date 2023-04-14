@@ -46,7 +46,6 @@ export class Contact implements IContact {
         }
       })
     }
-    console.log(contactsWithWeather[0].weather)
 
     return contactsWithWeather
   }

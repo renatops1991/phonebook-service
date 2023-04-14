@@ -24,8 +24,9 @@ export class ContactRepositoryMongoAdapter implements IContactRepository {
   async fetchContacts (filterContactDto: FilterContactDto): Promise<ContactOutputDto[]> {
     const { name, email, phone, address, postcode } = filterContactDto
     const filter = !(name ?? email ?? phone ?? address ?? postcode)
-      ? {}
+      ? { isDeleted: { $ne: true } }
       : {
+          isDeleted: { $ne: true },
           $or: [
             { name },
             { email },
