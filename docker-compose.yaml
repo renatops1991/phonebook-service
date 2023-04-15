@@ -16,7 +16,9 @@ services:
     environment:
       - MONGODB_URI=${MONGODB_DOCKER_URI}
       - PORT=${PORT}
-    command: bash -c "npm install --omit=dev && npm run start"
+      - HG_BRASIL_KEY=${HG_BRASIL_KEY}
+      - HG_BRASIL_URI=${HG_BRASIL_URI}
+    command: bash -c "npm install --omit=dev --ignore-scripts && npm run start"
     volumes:
       - ./dist/:/usr/src/app/dist/
       - ./package.json:/usr/src/app/package.json
