@@ -46,7 +46,7 @@ jobs:
       - name: Running tests
         run: npm test --coverage
         env:
-          MONGODB_URL_TEST: ${{ secrets.MONGODB_URL_TEST }}
+          MONGODB_URL_TEST: ${{ secrets.MONGODB_URI_TEST }}
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
