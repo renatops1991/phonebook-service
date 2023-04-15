@@ -24,5 +24,5 @@ export default (router: Router): void => {
   router.post('/contact', expressAdapter(new CreateContact(contact, makeCreateValidationFactory())))
   router.get('/contacts', expressAdapter(new FetchContact(contact, makeFetchValidationFactory())))
   router.put('/contact/:email', expressAdapter(new UpdateContact(contact, makeUpdateValidationFactory())))
-  router.delete('/contact/:email', expressAdapter(new DeleteContact(contact, makeDeleteValidationFactory())))
+  router.delete('/contact/remove/:email', expressAdapter(new DeleteContact(contact, makeDeleteValidationFactory())))
 }
