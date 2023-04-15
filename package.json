@@ -9,6 +9,8 @@
     "test:unit": "npm test -- --watch -c jest-unit.config.js",
     "test:e2e": "npm test -- --watch -c jest-e2e.config.js",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
+    "lint": "eslint src --ext ts",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "docker:reset": "docker rm -f $(docker ps -a -q)",
     "prepare": "husky install"
   },
